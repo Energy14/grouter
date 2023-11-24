@@ -21,3 +21,7 @@ Preču piegādes maršrutēšana ar velo kurjeru
 # Konceptu Modelis
 
 ![KonceptuModelis](media/KonceptuModelis.PNG)
+
+# Tehnoloģiju Steks
+
+![Tehnoloģiju Steks](media/TechStack.PNG)
