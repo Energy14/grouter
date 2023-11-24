@@ -18,6 +18,16 @@ Preču piegādes maršrutēšana ar velo kurjeru
 
 - Tabulas izstrādē piedalījās visa grupa, rezultāts tika iesniegts no viena profila
 
+# Lietotāju stāsti
+
+| Nr.p.k. | Lietotāju stāsts                                                                                    | Prioritāte |
+| :-----: | :-------------------------------------------------------------------------------------------------- | :--------: |
+|    1    | Klients vēlas saņemt pasūtījumu, jo negrib braukt pakaļ pats                                        |   Augsta   |
+|    2    | Vadītājs vēlas viegli pieejamu informāciju par maršrutu, jo viņam jāredz maršruts piegādes laikā    |   Augsta   |
+|    3    | Vadītājs vēlas optimālu maršrutu, jo viņam jānogādā pasūtījumi pēc iespējas ātrāk                   |   Augsta   |
+|    4    | Klients vēlas saņemt informāciju par pasūtījuma piegādes statusu, jo viņš grib zināt, kad to gaidīt |   Vidēja   |
+|    5    | Klients vēlas, lai pasūtījums tiek piegādāts ar dabai draudzīgu transportu, jo klientam rūp vide    |   Vidēja   |
+
 # Konceptu Modelis
 
 ![KonceptuModelis](media/KonceptuModelis.PNG)
