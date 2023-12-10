@@ -36,7 +36,6 @@ function addInput(input) {
   let newInput = newItem.getElementsByTagName('input')[0];
 
   newInput.value = '';
-  newInput.id = 'input-' + this.inputId++;
 
   list.appendChild(newItem);
   updateLastInput(list);
@@ -71,6 +70,8 @@ function collectInfo() {
 
     if (inputListInfo.length > 0) {
       info[inputListId] = inputListInfo;
+    } else {
+      throw new Error('Input list ' + inputListId + ' is empty');
     }
   }
 
@@ -78,20 +79,24 @@ function collectInfo() {
 }
 
 function sendInfo() {
-  let info = collectInfo();
-  console.log('Sending: ', info);
+  try {
+    let info = collectInfo();
+    console.log('Sending: ', info);
 
-  let xhr = new XMLHttpRequest();
-  xhr.open('POST', 'API_GOES_HERE', true);
-  xhr.setRequestHeader('Content-Type', 'application/json');
+    let xhr = new XMLHttpRequest();
+    xhr.open('POST', 'API_GOES_HERE', true);
+    xhr.setRequestHeader('Content-Type', 'application/json');
 
-  xhr.onreadystatechange = function () {
-    if (xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
-      console.log(xhr.responseText);
-    } else {
-      console.log('Error: ' + xhr.status);
-    }
-  };
+    xhr.onreadystatechange = function () {
+      if (xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
+        console.log(xhr.responseText);
+      } else {
+        console.log('Error: ' + xhr.status);
+      }
+    };
 
-  xhr.send(JSON.stringify(info));
+    xhr.send(JSON.stringify(info));
+  } catch (e) {
+    // Error collecting info, do nothing
+  }
 }

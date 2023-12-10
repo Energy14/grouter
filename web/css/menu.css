@@ -82,7 +82,7 @@
 
 .menu-content__body-item {
   border-top: 1px solid var(--light-gray);
-  padding: 20px 8px;
+  padding: 20px 18px 20px 8px;
   display: flex;
   flex-direction: column;
 }

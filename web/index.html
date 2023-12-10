@@ -17,7 +17,7 @@
           <div class="menu-button__bar transition"></div>
         </button>
       </div>
-      <div class="menu-content transition">
+      <form onsubmit="return false" class="menu-content transition">
         <h1 class="menu-header title-text">
           <span class="accent-text">G</span>router
         </h1>
@@ -28,6 +28,7 @@
               <li>
                 <input
                   type="text"
+                  required
                   placeholder="..."
                   oninput="addInput(this)"
                   class="menu-content__body-input"
@@ -49,6 +50,7 @@
               <li>
                 <input
                   type="text"
+                  required
                   placeholder="..."
                   oninput="addInput(this)"
                   class="menu-content__body-input"
@@ -65,7 +67,7 @@
             </ul>
           </div>
           <div class="menu-content__body-item">
-            <button onclick="sendInfo()" class="submit-button transition">Izveidot Maršrutu</h2>
+            <input type="submit" value="Izveidot Maršrutu" onclick="sendInfo()" class="submit-button transition"></input>
           </div>
         </div>
       </div>
