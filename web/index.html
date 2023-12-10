@@ -3,45 +3,74 @@
     <title>Grouter!</title>
     <link rel="icon" href="recources/logo_small.webp" />
     <script src="http://www.openlayers.org/api/OpenLayers.js"></script>
-    <script src="javascript/index.js"></script>
     <link rel="stylesheet" href="css/index.css" />
     <link rel="stylesheet" href="css/menu.css" />
     <meta charset="UTF-8" />
   </head>
   <body>
     <div id="mapdiv" class="map"></div>
-    <div id="menu" class="menu transition">
-      <button onclick="toggleMenu()" class="menu-button">
-        <div class="menu-button-bar transition"></div>
-        <div class="menu-button-bar transition"></div>
-        <div class="menu-button-bar transition"></div>
-      </button>
+    <div id="menu" class="menu open transition">
+      <div class="menu-button__container">
+        <button onclick="toggleMenu()" class="menu-button">
+          <div class="menu-button__bar transition"></div>
+          <div class="menu-button__bar transition"></div>
+          <div class="menu-button__bar transition"></div>
+        </button>
+      </div>
       <div class="menu-content transition">
         <h1 class="menu-header title-text">
           <span class="accent-text">G</span>router
         </h1>
-        <div class="menu-content-body">
-          <div class="menu-content-body-item">
-            <h2 class="subtitle-text">Start</h2>
-            <input
-              id="start"
-              type="text"
-              placeholder="Start"
-              class="menu-content-body-item-input"
-            />
+        <div class="menu-content__body">
+          <div class="menu-content__body-item">
+            <h2 class="subtitle-text">Adreses</h2>
+            <ul id="addresses" class="menu-content__body-input-list">
+              <li>
+                <input
+                  type="text"
+                  placeholder="..."
+                  oninput="addInput(this)"
+                  class="menu-content__body-input"
+                />
+              </li>
+              <li>
+                <input
+                  type="text"
+                  placeholder="..."
+                  oninput="addInput(this)"
+                  class="menu-content__body-input"
+                />
+              </li>
+            </ul>
           </div>
-          <div class="menu-content-body-item">
-            <h2 class="subtitle-text">End</h2>
-            <input
-              id="end"
-              type="text"
-              placeholder="End"
-              class="menu-content-body-item-input"
-            />
+          <div class="menu-content__body-item">
+            <h2 class="subtitle-text">Kurjeri</h2>
+            <ul id="couriers" class="menu-content__body-input-list">
+              <li>
+                <input
+                  type="text"
+                  placeholder="..."
+                  oninput="addInput(this)"
+                  class="menu-content__body-input"
+                />
+              </li>
+              <li>
+                <input
+                  type="text"
+                  placeholder="..."
+                  oninput="addInput(this)"
+                  class="menu-content__body-input"
+                />
+              </li>
+            </ul>
+          </div>
+          <div class="menu-content__body-item">
+            <button onclick="sendInfo()" class="submit-button transition">Izveidot Maršrutu</h2>
           </div>
         </div>
       </div>
     </div>
     <script src="javascript/map.js"></script>
+    <script src="javascript/menu.js"></script>
   </body>
 </html>

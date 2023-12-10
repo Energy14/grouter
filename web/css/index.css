@@ -1,8 +1,9 @@
 :root {
   --primary-color: #1f2421;
-  --secondary-color: #eeeff0;
-  --light-gray: #e8e9eb;
-  --accent-color: #ef6461;
+  --secondary-color: #f6fbff;
+  --light-gray: #cfdaee;
+  --accent-color: #e75050;
+  --accent-color-light: #eb5757;
 }
 
 * {
@@ -15,7 +16,7 @@
 }
 
 body {
-  font-family: 'Roboto', sans-serif;
+  font-family: 'Tahoma', sans-serif;
   font-size: 16px;
   line-height: 1.5;
   color: var(--primary-color);
@@ -45,21 +46,23 @@ body {
 }
 
 .transition {
-  transition: all 0.3s ease-in-out;
+  transition: all 0.3s ease-out;
 }
 
 .title-text {
   font-size: 3rem;
-  letter-spacing: -0.125rem;
+  line-height: 3rem;
+  letter-spacing: -1px;
   font-weight: 700;
-  margin-bottom: 16px;
+  margin-bottom: 1rem;
 }
 
 .subtitle-text {
   font-size: 1.5rem;
-  font-weight: 700;
-  letter-spacing: -0.025rem;
-  margin-bottom: 8px;
+  line-height: 1.5rem;
+  font-weight: 500;
+  letter-spacing: -0.5px;
+  margin-bottom: 1rem;
 }
 
 .map {
@@ -71,4 +74,8 @@ body {
   top: 8px !important;
   right: 8px !important;
   left: auto !important;
+}
+
+input {
+  background-color: var(--secondary-color);
 }
