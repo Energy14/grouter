@@ -79,24 +79,31 @@ function collectInfo() {
 }
 
 function sendInfo() {
+  let info = null;
   try {
-    let info = collectInfo();
+    info = collectInfo();
     console.log('Sending: ', info);
-
-    let xhr = new XMLHttpRequest();
-    xhr.open('POST', 'API_GOES_HERE', true);
-    xhr.setRequestHeader('Content-Type', 'application/json');
-
-    xhr.onreadystatechange = function () {
-      if (xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
-        console.log(xhr.responseText);
-      } else {
-        console.log('Error: ' + xhr.status);
-      }
-    };
-
-    xhr.send(JSON.stringify(info));
   } catch (e) {
-    // Error collecting info, do nothing
+    // Error collecting info, form validation failed
+    return;
   }
+
+  let xhr = new XMLHttpRequest();
+  xhr.open('POST', 'API_GOES_HERE', true);
+  xhr.setRequestHeader('Content-Type', 'application/json');
+
+  xhr.onreadystatechange = function () {
+    if (xhr.readyState !== XMLHttpRequest.DONE || xhr.status !== 200) {
+      alert(
+        'Error sending info: ' +
+          (xhr.status === 0
+            ? 'API could not be reached or is not configured!'
+            : '') +
+          '\nStatus: ' +
+          xhr.status
+      );
+    }
+  };
+
+  xhr.send(JSON.stringify(info));
 }
