@@ -1,0 +1,75 @@
+.menu {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 1000;
+  background-color: #fff;
+  width: 48px;
+  height: 48px;
+  border-radius: 0 0 8px 0;
+  padding: 8px;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.menu.open {
+  height: 100vh;
+  width: 300px;
+  border-radius: 0;
+}
+
+.menu-button {
+  width: 32px;
+  height: 32px;
+  position: absolute;
+  z-index: 1001;
+  top: 8px;
+  right: 8px;
+  background-color: transparent;
+}
+
+.menu-button-bar {
+  width: 100%;
+  height: 4px;
+  background-color: var(--primary-color);
+  border-radius: 4px;
+  margin: 4px 0;
+}
+
+.menu.open .menu-button-bar:nth-child(1) {
+  transform: translate(0, 8px) rotate(45deg);
+}
+
+.menu.open .menu-button-bar:nth-child(2) {
+  opacity: 0;
+}
+
+.menu.open .menu-button-bar:nth-child(3) {
+  transform: translate(0, -8px) rotate(-45deg);
+}
+
+.menu-content {
+  display: flex;
+  flex-direction: column;
+  opacity: 0;
+}
+
+.menu.open .menu-content {
+  opacity: 1;
+}
+
+.menu-header {
+  padding: 0 8px;
+}
+
+.menu-content-body {
+  max-height: 80vh;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+.menu-content-body-item {
+  border-top: 1px solid var(--secondary-color);
+  padding: 16px 8px;
+}

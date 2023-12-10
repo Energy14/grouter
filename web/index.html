@@ -1,0 +1,47 @@
+<html>
+  <head>
+    <title>Grouter!</title>
+    <link rel="icon" href="recources/logo_small.webp" />
+    <script src="http://www.openlayers.org/api/OpenLayers.js"></script>
+    <script src="javascript/index.js"></script>
+    <link rel="stylesheet" href="css/index.css" />
+    <link rel="stylesheet" href="css/menu.css" />
+    <meta charset="UTF-8" />
+  </head>
+  <body>
+    <div id="mapdiv" class="map"></div>
+    <div id="menu" class="menu transition">
+      <button onclick="toggleMenu()" class="menu-button">
+        <div class="menu-button-bar transition"></div>
+        <div class="menu-button-bar transition"></div>
+        <div class="menu-button-bar transition"></div>
+      </button>
+      <div class="menu-content transition">
+        <h1 class="menu-header title-text">
+          <span class="accent-text">G</span>router
+        </h1>
+        <div class="menu-content-body">
+          <div class="menu-content-body-item">
+            <h2 class="subtitle-text">Start</h2>
+            <input
+              id="start"
+              type="text"
+              placeholder="Start"
+              class="menu-content-body-item-input"
+            />
+          </div>
+          <div class="menu-content-body-item">
+            <h2 class="subtitle-text">End</h2>
+            <input
+              id="end"
+              type="text"
+              placeholder="End"
+              class="menu-content-body-item-input"
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+    <script src="javascript/map.js"></script>
+  </body>
+</html>
