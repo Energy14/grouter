@@ -71,7 +71,7 @@ function hslToHex(h, s, l) {
 }
 
 function getColor(routeIndex, routeCount) {
-  color = hslToHex((routeIndex / routeCount) * 360, 100, 50);
+  color = hslToHex((routeIndex / (routeCount - 1)) * 360, 100, 50);
   return color;
 }
 
