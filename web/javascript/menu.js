@@ -89,19 +89,24 @@ function sendInfo() {
   }
 
   let xhr = new XMLHttpRequest();
-  xhr.open('POST', 'API_GOES_HERE', true);
+  xhr.open('POST', 'http://localhost:5000/api', true);
   xhr.setRequestHeader('Content-Type', 'application/json');
 
   xhr.onreadystatechange = function () {
-    if (xhr.readyState !== XMLHttpRequest.DONE || xhr.status !== 200) {
-      alert(
-        'Error sending info: ' +
-          (xhr.status === 0
-            ? 'API could not be reached or is not configured!'
-            : '') +
-          '\nStatus: ' +
-          xhr.status
-      );
+    if (xhr.readyState === 4) {
+      if (xhr.status !== 200) {
+        console.log(xhr);
+        alert(
+          'Error sending info: ' +
+            (xhr.status === 0
+              ? 'API could not be reached or is not configured!'
+              : '') +
+            '\nStatus: ' +
+            xhr.status
+        );
+      } else {
+        alert(xhr.responseText);
+      }
     }
   };
 
