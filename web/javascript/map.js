@@ -27,7 +27,7 @@ var markers = new VectorLayer({
   style: new ol.style.Style({
     image: new ol.style.Icon({
       anchor: [0.5, 1],
-      src: 'recourses/map-marker-svgrepo-com.svg',
+      src: 'resources/map-marker-svgrepo-com.svg',
     }),
   }),
   zIndex: 1001,
@@ -57,25 +57,25 @@ function getRandomInRange(range) {
   return Math.floor(Math.random() * range);
 }
 
-function getRandomColor() {
-  color = '';
-  brightnessSum = 0;
-  for (var i = 0; i < 3; i++) {
-    brightness = getRandomInRange(16);
-    brightnessSum += brightness;
-    color += brightness.toString(16);
-  }
-  if (brightnessSum < 32) {
-    color[getRandomInRange(3) + 1] = 'a';
-  }
-  if (brightnessSum > 42) {
-    color[getRandomInRange(3) + 1] = '5';
-  }
-  console.log(color);
-  return '#' + color;
+function hslToHex(h, s, l) {
+  l /= 100;
+  const a = (s * Math.min(l, 1 - l)) / 100;
+  const f = (n) => {
+    const k = (n + h / 30) % 12;
+    const color = l - a * Math.max(Math.min(k - 3, 9 - k, 1), -1);
+    return Math.round(255 * color)
+      .toString(16)
+      .padStart(2, '0');
+  };
+  return `#${f(0)}${f(8)}${f(4)}`;
 }
 
-function drawRoute(route) {
+function getColor(routeIndex, routeCount) {
+  color = hslToHex((routeIndex / routeCount) * 360, 100, 50);
+  return color;
+}
+
+function drawRoute(route, routeIndex, routeCount) {
   let lineFeatures = [];
 
   lineFeatures.push(drawLine(route));
@@ -87,7 +87,7 @@ function drawRoute(route) {
 
   const style = new Style({
     stroke: new Stroke({
-      color: getRandomColor(),
+      color: getColor(routeIndex, routeCount),
       width: 5,
     }),
   });
@@ -101,8 +101,9 @@ function drawRoute(route) {
 }
 
 function drawRoutes(data) {
+  let index = 0;
   for (const [_, route] of Object.entries(data)) {
-    drawRoute(route);
+    drawRoute(route, index++, Object.keys(data).length);
   }
 }
 
