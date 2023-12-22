@@ -22,45 +22,11 @@ const map = new ol.Map({
   }),
 });
 
-function drawLine(data, markers) {
-  var points = [];
-
-  data['lines'].forEach((point) => {
-    var lonLat = fromLonLat([point.lon, point.lat]);
-
-    points.push(lonLat);
-  });
-
-  data['markers'].forEach((point) => {
-    var lonLat = fromLonLat([point.lon, point.lat]);
-
-    var marker = new Feature(new Point(lonLat));
-    markers.getSource().addFeature(marker);
-  });
-
-  var lineFeature = new Feature({
-    geometry: new LineString(points),
-  });
-
-  return lineFeature;
-}
-
-function hslToHex(h, s, l) {
-  l /= 100;
-  const a = (s * Math.min(l, 1 - l)) / 100;
-  const f = (n) => {
-    const k = (n + h / 30) % 12;
-    const color = l - a * Math.max(Math.min(k - 3, 9 - k, 1), -1);
-    return Math.round(255 * color)
-      .toString(16)
-      .padStart(2, '0');
-  };
-  return `#${f(0)}${f(8)}${f(4)}`;
-}
-
-function getColor(routeIndex, routeCount) {
-  color = hslToHex((routeIndex / (routeCount - 1)) * 245, 100, 69);
-  return color;
+function drawRoutes(data) {
+  let index = 0;
+  for (const [_, route] of Object.entries(data)) {
+    drawRoute(route, index++, Object.keys(data).length);
+  }
 }
 
 function drawRoute(route, routeIndex, routeCount) {
@@ -103,11 +69,85 @@ function drawRoute(route, routeIndex, routeCount) {
   map.addLayer(vector_layer);
 }
 
-function drawRoutes(data) {
-  let index = 0;
-  for (const [_, route] of Object.entries(data)) {
-    drawRoute(route, index++, Object.keys(data).length);
-  }
+function drawLine(data, markers) {
+  var points = [];
+
+  data['lines'].forEach((point) => {
+    var lonLat = fromLonLat([point.lon, point.lat]);
+
+    points.push(lonLat);
+  });
+
+  data['markers'].forEach((point) => {
+    var lonLat = fromLonLat([point.lon, point.lat]);
+
+    var marker = new Feature(new Point(lonLat));
+    markers.getSource().addFeature(marker);
+  });
+
+  var lineFeature = new Feature({
+    geometry: new LineString(points),
+  });
+
+  return lineFeature;
+}
+
+function hslToHex(h, s, l) {
+  l /= 100;
+  const a = (s * Math.min(l, 1 - l)) / 100;
+  const f = (n) => {
+    const k = (n + h / 30) % 12;
+    const color = l - a * Math.max(Math.min(k - 3, 9 - k, 1), -1);
+    return Math.round(255 * color)
+      .toString(16)
+      .padStart(2, '0');
+  };
+  return `#${f(0)}${f(8)}${f(4)}`;
+}
+
+function getColor(routeIndex, routeCount) {
+  color = hslToHex((routeIndex / Math.max(1, routeCount - 1)) * 245, 100, 69);
+  return color;
+}
+
+function drawRoute(route, routeIndex, routeCount) {
+  let lineFeatures = [];
+
+  spectrumColor = getColor(routeIndex, routeCount);
+
+  var markers = new VectorLayer({
+    source: new ol.source.Vector(),
+    style: new ol.style.Style({
+      image: new ol.style.Icon({
+        anchor: [0.5, 1],
+        src: 'resources/map-marker-svgrepo-com.svg',
+        color: spectrumColor,
+      }),
+    }),
+    zIndex: 1001,
+  });
+  map.addLayer(markers);
+
+  lineFeatures.push(drawLine(route, markers));
+
+  var source = new VectorSource({
+    features: lineFeatures,
+    wrapX: false,
+  });
+
+  const style = new Style({
+    stroke: new Stroke({
+      color: spectrumColor,
+      width: 5,
+    }),
+  });
+
+  var vector_layer = new VectorLayer({
+    source: source,
+    style: style,
+  });
+
+  map.addLayer(vector_layer);
 }
 
 let testData = {
