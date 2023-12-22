@@ -22,25 +22,17 @@ const map = new ol.Map({
   }),
 });
 
-var markers = new VectorLayer({
-  source: new ol.source.Vector(),
-  style: new ol.style.Style({
-    image: new ol.style.Icon({
-      anchor: [0.5, 1],
-      src: 'resources/map-marker-svgrepo-com.svg',
-    }),
-  }),
-  zIndex: 1001,
-});
-map.addLayer(markers);
-
-function drawLine(data) {
+function drawLine(data, markers) {
   var points = [];
 
-  data.forEach((point) => {
+  data['lines'].forEach((point) => {
     var lonLat = fromLonLat([point.lon, point.lat]);
 
     points.push(lonLat);
+  });
+
+  data['markers'].forEach((point) => {
+    var lonLat = fromLonLat([point.lon, point.lat]);
 
     var marker = new Feature(new Point(lonLat));
     markers.getSource().addFeature(marker);
@@ -78,7 +70,22 @@ function getColor(routeIndex, routeCount) {
 function drawRoute(route, routeIndex, routeCount) {
   let lineFeatures = [];
 
-  lineFeatures.push(drawLine(route));
+  randColor = getColor(routeIndex, routeCount);
+
+  var markers = new VectorLayer({
+    source: new ol.source.Vector(),
+    style: new ol.style.Style({
+      image: new ol.style.Icon({
+        anchor: [0.5, 1],
+        src: 'resources/map-marker-svgrepo-com.svg',
+        color: randColor,
+      }),
+    }),
+    zIndex: 1001,
+  });
+  map.addLayer(markers);
+
+  lineFeatures.push(drawLine(route, markers));
 
   var source = new VectorSource({
     features: lineFeatures,
@@ -87,7 +94,7 @@ function drawRoute(route, routeIndex, routeCount) {
 
   const style = new Style({
     stroke: new Stroke({
-      color: getColor(routeIndex, routeCount),
+      color: randColor,
       width: 5,
     }),
   });
@@ -108,28 +115,49 @@ function drawRoutes(data) {
 }
 
 let testData = {
-  route1: [
-    { lon: 24.1254218, lat: 56.996745 },
-    { lon: 24.137366, lat: 56.983077 },
-    { lon: 24.1523147, lat: 56.9561278 },
-    { lon: 24.198709, lat: 56.970187 },
-    { lon: 24.1606, lat: 56.9751356 },
-  ],
-  route2: [
-    { lon: 24.1500078, lat: 56.946285 },
-    { lon: 24.105078, lat: 56.9462585 },
-    { lon: 24.100078, lat: 56.951285 },
-    { lon: 24.124218, lat: 56.9956745 },
-  ],
-  route3: [
-    { lon: 24.125078, lat: 56.946285 },
-    { lon: 24.120078, lat: 56.946285 },
-    { lon: 24.1205078, lat: 56.951285 },
-    { lon: 24.123147, lat: 56.9561278 },
-    { lon: 24.128709, lat: 56.970187 },
-    { lon: 24.1206, lat: 56.971356 },
-    { lon: 24.127366, lat: 56.983077 },
-  ],
+  route1: {
+    lines: [
+      { lon: 24.1254218, lat: 56.996745 },
+      { lon: 24.137366, lat: 56.983077 },
+      { lon: 24.1523147, lat: 56.9561278 },
+      { lon: 24.198709, lat: 56.970187 },
+      { lon: 24.1606, lat: 56.9751356 },
+    ],
+    markers: [
+      { lon: 24.1254218, lat: 56.996745 },
+      { lon: 24.198709, lat: 56.970187 },
+      { lon: 24.1606, lat: 56.9751356 },
+    ],
+  },
+  route2: {
+    lines: [
+      { lon: 24.1500078, lat: 56.946285 },
+      { lon: 24.105078, lat: 56.9462585 },
+      { lon: 24.100078, lat: 56.951285 },
+      { lon: 24.124218, lat: 56.9906745 },
+    ],
+    markers: [
+      { lon: 24.1500078, lat: 56.946285 },
+      { lon: 24.105078, lat: 56.9462585 },
+      { lon: 24.124218, lat: 56.9906745 },
+    ],
+  },
+  route3: {
+    lines: [
+      { lon: 24.125078, lat: 56.946285 },
+      { lon: 24.120078, lat: 56.946285 },
+      { lon: 24.1205078, lat: 56.951285 },
+      { lon: 24.123147, lat: 56.9561278 },
+      { lon: 24.128709, lat: 56.970187 },
+      { lon: 24.1206, lat: 56.971356 },
+      { lon: 24.127366, lat: 56.983077 },
+    ],
+    markers: [
+      { lon: 24.125078, lat: 56.946285 },
+      { lon: 24.1205078, lat: 56.951285 },
+      { lon: 24.127366, lat: 56.983077 },
+    ],
+  },
 };
 
 drawRoutes(testData);

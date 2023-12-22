@@ -70,7 +70,7 @@ body {
   height: 100vh;
 }
 
-.olControlZoom {
+.ol-zoom {
   top: 8px !important;
   right: 8px !important;
   left: auto !important;
