@@ -66,7 +66,7 @@ function getColor(routeIndex, routeCount) {
 function drawRoute(route, routeIndex, routeCount) {
   let lineFeatures = [];
 
-  randColor = getColor(routeIndex, routeCount);
+  spectrumColor = getColor(routeIndex, routeCount);
 
   var markers = new VectorLayer({
     source: new ol.source.Vector(),
@@ -74,7 +74,7 @@ function drawRoute(route, routeIndex, routeCount) {
       image: new ol.style.Icon({
         anchor: [0.5, 1],
         src: 'resources/map-marker-svgrepo-com.svg',
-        color: randColor,
+        color: spectrumColor,
       }),
     }),
     zIndex: 1001,
@@ -90,7 +90,7 @@ function drawRoute(route, routeIndex, routeCount) {
 
   const style = new Style({
     stroke: new Stroke({
-      color: randColor,
+      color: spectrumColor,
       width: 5,
     }),
   });
