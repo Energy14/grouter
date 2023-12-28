@@ -61,6 +61,7 @@
 }
 
 .menu-content {
+  max-height: calc(100vh - 40px);
   display: flex;
   flex-direction: column;
   opacity: 0;
@@ -75,7 +76,6 @@
 }
 
 .menu-content__body {
-  max-height: 80vh;
   overflow-y: auto;
   overflow-x: hidden;
 }

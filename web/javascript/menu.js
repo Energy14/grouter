@@ -8,9 +8,7 @@ var listId = 0;
 mapInputLists();
 
 function mapInputLists() {
-  let inputLists = document.getElementsByClassName(
-    'menu-content__body-input-list'
-  );
+  let inputLists = document.getElementsByClassName('menu-content__body-input-list');
 
   for (let i = 0; i < inputLists.length; i++) {
     updateLastInput(inputLists[i]);
@@ -49,9 +47,7 @@ function removeInput(input) {
 function collectInfo() {
   let info = {};
 
-  let inputLists = document.getElementsByClassName(
-    'menu-content__body-input-list'
-  );
+  let inputLists = document.getElementsByClassName('menu-content__body-input-list');
 
   for (let i = 0; i < inputLists.length; i++) {
     let inputList = inputLists[i];
@@ -94,18 +90,16 @@ function sendInfo() {
 
   xhr.onreadystatechange = function () {
     if (xhr.readyState === 4) {
-      if (xhr.status !== 200) {
-        console.log(xhr);
+      if (xhr.status === 200) {
+        let response_json = JSON.parse(xhr.responseText);
+        drawRoutes(response_json);
+      } else {
         alert(
           'Error sending info: ' +
-            (xhr.status === 0
-              ? 'API could not be reached or is not configured!'
-              : '') +
+            (xhr.status === 0 ? 'API could not be reached or is not configured!' : '') +
             '\nStatus: ' +
             xhr.status
         );
-      } else {
-        alert(xhr.responseText);
       }
     }
   };

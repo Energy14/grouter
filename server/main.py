@@ -37,7 +37,7 @@ def post_data():
             result = response.json()
             lat = result[0]['lat']
             lon = result[0]['lon']
-            print(f'Latitude: {lat}, Longitude: {lon}')
+            print(f'[Address: {address}] Latitude: {lat}, Longitude: {lon}')
             
             coordinates.append((lat, lon))
         else:
@@ -84,13 +84,23 @@ def post_data():
         routes[courier] = []
         for i in range(len(path[0])):
             routes[courier].append(courier_dict[courier][path[0][i]])
-    
-    print('routes:')
-    print(routes)
 
     # Process the data and return a response
-    response = routes
+    response = format_routes(routes)
     return jsonify(response)
+
+
+def format_routes(routes):
+    formatted_routes = {}
+    for courier, route in routes.items():
+        formatted_markers = []
+        for coordinate in route:
+            formatted_markers.append({'lat': coordinate[0], 'lon': coordinate[1]})
+        formatted_routes[courier] = {
+            'markers': formatted_markers, 
+            'lines': formatted_markers
+        }
+    return formatted_routes
 
 
 if __name__ == '__main__':
