@@ -34,10 +34,13 @@ def post_data():
         response = requests.get(f'https://geocode.maps.co/search?q={address}&api_key=658d4f89d6a8f549657909ovw64c95d')
 
         if response.status_code == 200:
-            result = response.json()
-            lat = result[0]['lat']
-            lon = result[0]['lon']
-            print(f'[Address: {address}] Latitude: {lat}, Longitude: {lon}')
+            try:
+                result = response.json()
+                lat = result[0]['lat']
+                lon = result[0]['lon']
+                print(f'[Address: {address}] Latitude: {lat}, Longitude: {lon}')
+            except:
+                return f'Address: [{address}] not found!', 400
             
             coordinates.append((lat, lon))
         else:

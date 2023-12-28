@@ -97,6 +97,7 @@ function sendInfo() {
         alert(
           'Error sending info: ' +
             (xhr.status === 0 ? 'API could not be reached or is not configured!' : '') +
+            (xhr.responseText ? '\nResponse: ' + xhr.responseText : '') +
             '\nStatus: ' +
             xhr.status
         );
