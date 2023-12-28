@@ -43,8 +43,6 @@ def post_data():
         else:
             print('api not gud')
         time.sleep(1)
-    
-    print(coordinates)
 
     # Calculate distances between points
     #distances = []
@@ -58,7 +56,6 @@ def post_data():
     # Use KMeans to make clusters
     kmeans = KMeans(n_clusters=len(courier_list))
     kmeans.fit(coordinates)
-    print(kmeans.labels_)
     
     # Create a dictionary where the keys are the courier names and the values are the coordinates of points assigned to that courier
     courier_dict = {}
@@ -68,14 +65,10 @@ def post_data():
             courier_dict[courier] = [coordinates[i]]
         else:
             courier_dict[courier].append(coordinates[i])
-    print('courier_dict:')
-    print(courier_dict)
 
     routes = {}
     # solve tsp for each courier
     for courier in courier_dict:
-        print('courier:' + courier)
-        print(courier_dict[courier])
         # create distance matrix for tsp
         distances = []
         for i in range(len(courier_dict[courier])):
@@ -85,12 +78,8 @@ def post_data():
                 end = courier_dict[courier][j]
                 distance = geodesic(start, end).m
                 distances[i].append(distance)
-        print(distances)
-        print(np.array(distances))
         # solve tsp
         path = solve_tsp_dynamic_programming(np.array(distances))
-        print('path:')
-        print(path)
         # create route
         routes[courier] = []
         for i in range(len(path[0])):
