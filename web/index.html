@@ -31,7 +31,7 @@
                   type="text"
                   required
                   placeholder="..."
-                  oninput="addInput(this)"
+                  oninput="updateInputList(this)"
                   class="menu-content__body-input"
                 />
               </li>
@@ -39,7 +39,21 @@
                 <input
                   type="text"
                   placeholder="..."
-                  oninput="addInput(this)"
+                  oninput="updateInputList(this)"
+                  class="menu-content__body-input"
+                />
+              </li>
+            </ul>
+          </div>
+          <div class="menu-content__body-item">
+            <h2 class="subtitle-text">Noliktava</h2>
+            <ul id="warehouse" class="menu-content__body-input-list" max-size="1">
+              <li>
+                <input
+                  type="text"
+                  required
+                  placeholder="..."
+                  oninput="updateInputList(this)"
                   class="menu-content__body-input"
                 />
               </li>
@@ -53,7 +67,7 @@
                   type="text"
                   required
                   placeholder="..."
-                  oninput="addInput(this)"
+                  oninput="updateInputList(this)"
                   class="menu-content__body-input"
                 />
               </li>
@@ -61,14 +75,17 @@
                 <input
                   type="text"
                   placeholder="..."
-                  oninput="addInput(this)"
+                  oninput="updateInputList(this)"
                   class="menu-content__body-input"
                 />
               </li>
             </ul>
           </div>
           <div class="menu-content__body-item">
-            <input type="submit" value="Izveidot Maršrutu" onclick="sendInfo()" class="submit-button transition"></input>
+            <button id="routeSubmit" type="submit" onclick="sendInfo()" class="submit-button transition">
+              <span>Izveidot maršrutus</span>
+              <img src="resources/wheel-svgrepo-com.svg" class="spinner">
+            </button>
           </div>
         </div>
       </div>

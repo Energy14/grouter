@@ -9,6 +9,7 @@ from sklearn.cluster import KMeans
 from python_tsp.exact import solve_tsp_dynamic_programming
 app = Flask(__name__)
 CORS(app)  # Enable CORS for all routes
+address_cache = {}
 
 @app.route('/', methods=['GET'])
 def home():
@@ -26,26 +27,22 @@ def post_data():
     # Logic to handle POST requests goes here
     data = request.get_json()
     address_list = data.get('addresses', [])
+    warehouse = data.get('warehouse', None)[0]
     courier_list = data.get('couriers', [])
 
     # Translate addresses to coordinates
     coordinates = []
     for address in address_list:
-        response = requests.get(f'https://geocode.maps.co/search?q={address}&api_key=658d4f89d6a8f549657909ovw64c95d')
+        try:
+            coordinates.append(get_address(address))
+        except Exception as e:
+            return e.args[0], 500
+        
+    try:
+        warehouseLocation = get_address(warehouse)
+    except Exception as e:
+        return e.args[0], 500
 
-        if response.status_code == 200:
-            try:
-                result = response.json()
-                lat = result[0]['lat']
-                lon = result[0]['lon']
-                print(f'[Address: {address}] Latitude: {lat}, Longitude: {lon}')
-            except:
-                return f'Address: [{address}] not found!', 400
-            
-            coordinates.append((lat, lon))
-        else:
-            print('api not gud')
-        time.sleep(1)
 
     # Calculate distances between points
     #distances = []
@@ -57,7 +54,7 @@ def post_data():
     #        distances.append([i,distance])
 
     # Use KMeans to make clusters
-    kmeans = KMeans(n_clusters=len(courier_list))
+    kmeans = KMeans(n_clusters=len(courier_list), n_init=10)
     kmeans.fit(coordinates)
     
     # Create a dictionary where the keys are the courier names and the values are the coordinates of points assigned to that courier
@@ -66,6 +63,7 @@ def post_data():
         courier = courier_list[kmeans.labels_[i]]
         if courier not in courier_dict:
             courier_dict[courier] = [coordinates[i]]
+            courier_dict[courier].append(warehouseLocation)
         else:
             courier_dict[courier].append(coordinates[i])
 
@@ -93,16 +91,46 @@ def post_data():
     return jsonify(response)
 
 
+def get_address(address):
+    if address in address_cache:
+        return address_cache[str(address)]
+    
+    response = requests.get(f'https://geocode.maps.co/search?q={address}&api_key=658d4f89d6a8f549657909ovw64c95d')
+
+    if response.status_code == 200:
+        try:
+            result = response.json()
+            lat = result[0]['lat']
+            lon = result[0]['lon']
+            print(f'[Address: {address}] Latitude: {lat}, Longitude: {lon}')
+        except Exception as e:
+            raise Exception(f'Error fetching address: {address}!')
+        
+        address_cache[str(address)] = (lat, lon)
+        time.sleep(1)
+
+        return lat, lon
+    else:
+        raise Exception(f'Error fetching address: {address}!')
+    
+
 def format_routes(routes):
     formatted_routes = {}
     for courier, route in routes.items():
         formatted_markers = []
+        # TODO: Add proper paths between markers. Currently, it's just a straight line
+        formatted_lines = [] # lines between markers
+
         for coordinate in route:
             formatted_markers.append({'lat': coordinate[0], 'lon': coordinate[1]})
+            formatted_lines.append({'lat': coordinate[0], 'lon': coordinate[1]})
+        formatted_lines.append({'lat': route[0][0], 'lon': route[0][1]})
+
         formatted_routes[courier] = {
             'markers': formatted_markers, 
-            'lines': formatted_markers
+            'lines': formatted_lines
         }
+
     return formatted_routes
 
 
