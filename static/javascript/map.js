@@ -58,7 +58,7 @@ function drawRoute(route_name, route, routeIndex, routeCount) {
     style: new ol.style.Style({
       image: new ol.style.Icon({
         anchor: [0.5, 1],
-        src: 'resources/map-marker-svgrepo-com.svg',
+        src: 'static/resources/map-marker-svgrepo-com.svg',
         color: spectrumColor,
       }),
     }),

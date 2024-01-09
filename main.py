@@ -2,7 +2,7 @@ import requests
 import time
 import numpy as np
 
-from flask import Flask, jsonify, request, redirect
+from flask import Flask, jsonify, render_template, request, redirect
 from flask_cors import CORS
 from geopy.distance import geodesic
 from sklearn.cluster import KMeans
@@ -13,7 +13,7 @@ address_cache = {}
 
 @app.route('/', methods=['GET'])
 def home():
-    return redirect("https://youtu.be/dQw4w9WgXcQ?si=s5egZJ1Kr7_xkytG", code=302)
+    return render_template('index.html')
 
 @app.route('/api', methods=['GET'])
 def get_data():
