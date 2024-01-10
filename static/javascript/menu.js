@@ -93,7 +93,7 @@ function enableFormSubmit() {
   formSubmit.getElementsByTagName('span')[0].innerHTML = 'Izveidot maršrutus';
 }
 
-function sendInfo() {
+function sendInfo(serverIp) {
   disableFormSubmit();
 
   let info = null;
@@ -106,7 +106,7 @@ function sendInfo() {
   }
 
   let xhr = new XMLHttpRequest();
-  xhr.open('POST', 'http://localhost:5000/api', true);
+  xhr.open('POST', 'http://' + serverIp + '/api', true);
   xhr.setRequestHeader('Content-Type', 'application/json');
 
   xhr.onreadystatechange = function () {

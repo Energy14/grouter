@@ -13,7 +13,7 @@ address_cache = {}
 
 @app.route('/', methods=['GET'])
 def home():
-    return render_template('index.html')
+    return render_template('index.html', serverIp=request.environ['HTTP_HOST'])
 
 @app.route('/api', methods=['GET'])
 def get_data():
