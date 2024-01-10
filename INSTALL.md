@@ -19,5 +19,5 @@
 1. Open grouter in your CLI of choice
 2. Execute:
    ```
-   py main.py
+   py app.py
    ```
