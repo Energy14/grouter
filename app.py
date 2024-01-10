@@ -118,16 +118,45 @@ def format_routes(routes):
     formatted_routes = {}
     for courier, route in routes.items():
         formatted_markers = []
-        # TODO: Add proper paths between markers. Currently, it's just a straight line
-        formatted_lines = [] # lines between markers
+        formatted_lines = []  # lines between markers
 
         for coordinate in route:
             formatted_markers.append({'lat': coordinate[0], 'lon': coordinate[1]})
-            formatted_lines.append({'lat': coordinate[0], 'lon': coordinate[1]})
-        formatted_lines.append({'lat': route[0][0], 'lon': route[0][1]})
+
+        print(route)
+
+        for i in range(len(route) - 1):
+            response = requests.get(
+                "https://maps.googleapis.com/maps/api/directions/json",
+                params={
+                    "origin": f"{route[i][0]},{route[i][1]}",
+                    "destination": f"{route[i+1][0]},{route[i+1][1]}",
+                    "key": "AIzaSyCyVKM3YSZsfnbIUlUDSuPshLM5e8mWzh4"
+                }
+            )
+
+            for step in response.json()['routes'][0]['legs'][0]['steps']:
+                start = step['start_location']
+                end = step['end_location']
+                formatted_lines.append({'lat': start['lat'], 'lon': start['lng']})
+                formatted_lines.append({'lat': end['lat'], 'lon': end['lng']})
+
+        response = requests.get(
+            "https://maps.googleapis.com/maps/api/directions/json",
+            params={
+                "origin": f"{route[-1][0]},{route[-1][1]}",
+                "destination": f"{route[0][0]},{route[0][1]}",
+                "key": "AIzaSyCyVKM3YSZsfnbIUlUDSuPshLM5e8mWzh4"
+            }
+        )
+        for step in response.json()['routes'][0]['legs'][0]['steps']:
+                start = step['start_location']
+                end = step['end_location']
+                formatted_lines.append({'lat': start['lat'], 'lon': start['lng']})
+                formatted_lines.append({'lat': end['lat'], 'lon': end['lng']})
 
         formatted_routes[courier] = {
-            'markers': formatted_markers, 
+            'markers': formatted_markers,
             'lines': formatted_lines
         }
 
