@@ -104,7 +104,7 @@
   display: flex;
 }
 
-.menu-content__body-input-list > li > * {
+.menu-content__body-input-list > li > input {
   border: 1px solid var(--secondary-color);
   padding: 4px 8px;
   margin-bottom: 8px;
@@ -112,7 +112,7 @@
   flex: 1;
 }
 
-.menu-content__body-input-list > li:last-child > * {
+.menu-content__body-input-list > li:last-child > input {
   margin-bottom: 0;
 }
 

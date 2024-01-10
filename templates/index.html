@@ -1,9 +1,12 @@
-<html>
+<!DOCTYPE html>
   <head>
     <title>Grouter!</title>
     <link rel="icon" href="static/resources/logo_small.webp" />
+    <link rel="preconnect" href="static/javascript/map.js" />
+    <link rel="preconnect" href="https://cdn.jsdelivr.net/gh/openlayers/openlayers.github.io@master/en/v6.15.1" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/openlayers/openlayers.github.io@master/en/v6.15.1/css/ol.css" type="text/css">
     <script src="https://cdn.jsdelivr.net/gh/openlayers/openlayers.github.io@master/en/v6.15.1/build/ol.js"></script>
+    <link rel="preconnect" href="static/javascript/map.js" />
     <link rel="stylesheet" href="static/css/index.css" />
     <link rel="stylesheet" href="static/css/menu.css" />
     <meta charset="UTF-8" />
@@ -30,6 +33,8 @@
                 <input
                   type="text"
                   required
+                  name="address"
+                  autocomplete="off"
                   placeholder="..."
                   oninput="updateInputList(this)"
                   class="menu-content__body-input"
@@ -38,6 +43,8 @@
               <li>
                 <input
                   type="text"
+                  name="address"
+                  autocomplete="off"
                   placeholder="..."
                   oninput="updateInputList(this)"
                   class="menu-content__body-input"
@@ -52,6 +59,8 @@
                 <input
                   type="text"
                   required
+                  name="warehouse"
+                  autocomplete="off"
                   placeholder="..."
                   oninput="updateInputList(this)"
                   class="menu-content__body-input"
@@ -66,6 +75,8 @@
                 <input
                   type="text"
                   required
+                  name="courier"
+                  autocomplete="off"
                   placeholder="..."
                   oninput="updateInputList(this)"
                   class="menu-content__body-input"
@@ -74,6 +85,8 @@
               <li>
                 <input
                   type="text"
+                  name="courier"
+                  autocomplete="off"
                   placeholder="..."
                   oninput="updateInputList(this)"
                   class="menu-content__body-input"
@@ -82,7 +95,7 @@
             </ul>
           </div>
           <div class="menu-content__body-item">
-            <button id="routeSubmit" type="submit" onclick="sendInfo('{{serverIp}}')" class="submit-button transition">
+            <button id="routeSubmit" type="submit" onclick="sendInfo('{{serverHost}}')" class="submit-button transition">
               <span>Izveidot maršrutus</span>
               <img src="static/resources/wheel-svgrepo-com.svg" class="spinner">
             </button>

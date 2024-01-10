@@ -1,3 +1,17 @@
+@font-face {
+  font-family: 'Tahoma';
+  font-style: normal;
+  font-weight: 500;
+  src: url(../fonts/Tahoma_Regular_font.ttf) format('truetype');
+}
+
+@font-face {
+  font-family: 'Tahoma';
+  font-style: normal;
+  font-weight: 700;
+  src: url(../fonts/TAHOMAB0.TTF) format('truetype');
+}
+
 :root {
   --primary-color: #1f2421;
   --secondary-color: #f6fbff;
