@@ -6,7 +6,7 @@
    py --version
    ```
 
-2. Open grouter\server in your CLI of choice
+2. Open grouter in your CLI of choice
 
 3. Execute:
 
@@ -16,7 +16,7 @@
 
 # Running the API
 
-1. Open grouter\server in your CLI of choice
+1. Open grouter in your CLI of choice
 2. Execute:
    ```
    py main.py
