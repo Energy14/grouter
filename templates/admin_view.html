@@ -31,7 +31,6 @@
       <h2 class="subtitle-text error-text">Šobrīd nav pieejamu kurjeru!</h2>
       {% else %}
       <form onsubmit="return false" class="menu-content transition">
-
         <div class="menu-content__body">
           <div class="menu-content__body-item">
             <h2 class="subtitle-text">Adreses</h2>
@@ -60,6 +59,7 @@
                   name="warehouse"
                   autocomplete="off"
                   placeholder="..."
+                  value="Rīga, Zunda krastmala 10"
                   oninput="updateInputList(this)"
                   class="menu-content__body-input"
                 />

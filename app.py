@@ -102,10 +102,14 @@ def courier_view():
         return redirect("/login", code=303)
 
     active_routes = db.get_active_routes(user['id'])
+    formatted_routes = []
+    for route in active_routes.values():
+        formatted_routes.append((str(route['id']), route['distance'], route['ride_time']))
 
     return render_template('courier_view.html',
                            serverHost=request.environ['HTTP_HOST'],
-                           active_routes=active_routes, )
+                           active_routes=formatted_routes,
+                           **user)
 
 
 @app.route('/user', methods=['GET', 'POST'])
@@ -209,14 +213,14 @@ def post_data():
         for i in range(len(path[0])):
             routes[courier].append(courier_dict[courier][path[0][i]])
 
+    # Process the data
+    formatted_routes, distances, durations = format_routes(routes)
+
     # Save the routes to the database
     try:
-        db.save_routes(routes, order_dict)
+        db.save_routes(routes, order_dict, distances, durations)
     except Exception as e:
         return e.args[0], 500
-
-    # Process the data and return a response
-    formatted_routes = format_routes(routes)
 
     return jsonify(formatted_routes)
 
@@ -252,7 +256,7 @@ def save_order():
 def find_order_route():
     data = request.get_json()
 
-    order_id = data.get('order_ids', None)[0]
+    address_name, order_id = data.get('order', None)[0]
 
     if order_id is None:
         return f'Missing required field {order_id}', 500
@@ -262,7 +266,46 @@ def find_order_route():
     except Exception as e:
         return e.args[0], 500
 
+    if route_id is None:
+        return f'Route with order [{order_id}] not found', 500
 
+    try:
+        route = db.get_route(route_id)
+    except Exception as e:
+        return e.args[0], 500
+
+    coordinates = []
+    for order in route['orders']:
+        coordinates.append(order['coordinates'])
+
+    formatted_route = format_routes({route['id']: coordinates})[0]
+
+    return jsonify(formatted_route), 200
+
+
+@app.route('/api/courier/find-route', methods=['POST'])
+def find_route():
+    data = request.get_json()
+
+    packed_route = data.get('route', None)[0]
+
+    if packed_route is None:
+        return f'Missing required field route', 500
+
+    route_time, route_id = packed_route
+
+    try:
+        route = db.get_route(route_id)
+    except Exception as e:
+        return e.args[0], 500
+
+    coordinates = []
+    for order in route['orders']:
+        coordinates.append(order['coordinates'])
+
+    formatted_route = format_routes({route['id']: coordinates})[0]
+
+    return jsonify(formatted_route), 200
 
 
 def get_coordinates(address):
@@ -290,9 +333,14 @@ def get_coordinates(address):
 
 def format_routes(routes):
     formatted_routes = {}
+    distances = {}
+    durations = {}
+
     for courier, route in routes.items():
         formatted_markers = []
         formatted_lines = []  # lines between markers
+        distance = 0
+        duration = 0
 
         for coordinate in route:
             formatted_markers.append({'lat': coordinate[0], 'lon': coordinate[1]})
@@ -301,23 +349,31 @@ def format_routes(routes):
             response = requests.get(
                 "https://maps.googleapis.com/maps/api/directions/json",
                 params={
-                    "travelMode": "BICYCLING",
+                    "travelMode": "walking",
+                    "units": "metric",
                     "origin": f"{route[i][0]},{route[i][1]}",
                     "destination": f"{route[i + 1][0]},{route[i + 1][1]}",
                     "key": "AIzaSyCyVKM3YSZsfnbIUlUDSuPshLM5e8mWzh4"
                 }
             )
 
+            print({route[i][0]},{route[i][1]})
+            print({route[i + 1][0]},{route[i + 1][1]})
             for step in response.json()['routes'][0]['legs'][0]['steps']:
                 start = step['start_location']
                 end = step['end_location']
                 formatted_lines.append({'lat': start['lat'], 'lon': start['lng']})
                 formatted_lines.append({'lat': end['lat'], 'lon': end['lng']})
 
+            for leg in response.json()['routes'][0]['legs']:
+                distance += leg['distance']['value']
+                duration += leg['duration']['value']
+
         response = requests.get(
             "https://maps.googleapis.com/maps/api/directions/json",
             params={
-                "travelMode": "BICYCLING",
+                "travelMode": "walking",
+                "units": "metric",
                 "origin": f"{route[-1][0]},{route[-1][1]}",
                 "destination": f"{route[0][0]},{route[0][1]}",
                 "key": "AIzaSyCyVKM3YSZsfnbIUlUDSuPshLM5e8mWzh4"
@@ -329,12 +385,19 @@ def format_routes(routes):
             formatted_lines.append({'lat': start['lat'], 'lon': start['lng']})
             formatted_lines.append({'lat': end['lat'], 'lon': end['lng']})
 
+        for leg in response.json()['routes'][0]['legs']:
+            distance += leg['distance']['value']
+            duration += leg['duration']['value']
+
         formatted_routes[courier] = {
             'markers': formatted_markers,
             'lines': formatted_lines
         }
 
-    return formatted_routes
+        distances[courier] = distance
+        durations[courier] = duration
+
+    return formatted_routes, distances, durations
 
 
 def redirect_by_role():

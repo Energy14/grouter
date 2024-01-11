@@ -1,70 +1,105 @@
 <!DOCTYPE html>
-  <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1"/>
-    <title>Grouter!</title>
-    <link rel="icon" href="static/resources/logo_small.webp" />
-    <link rel="preconnect" href="static/javascript/map.js" />
-    <link rel="preconnect" href="https://cdn.jsdelivr.net/gh/openlayers/openlayers.github.io@master/en/v6.15.1" />
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/openlayers/openlayers.github.io@master/en/v6.15.1/css/ol.css" type="text/css">
-    <script src="https://cdn.jsdelivr.net/gh/openlayers/openlayers.github.io@master/en/v6.15.1/build/ol.js"></script>
-    <link rel="preconnect" href="static/javascript/map.js" />
-    <link rel="stylesheet" href="static/css/index.css" />
-    <link rel="stylesheet" href="static/css/menu.css" />
-    <meta charset="UTF-8" />
-  </head>
-  <body>
-    <div id="map" class="map"></div>
-    <div id="menu" class="menu open transition">
-      <div class="menu-button__container">
-        <button onclick="toggleMenu()" class="menu-button">
-          <div class="menu-button__bar transition"></div>
-          <div class="menu-button__bar transition"></div>
-          <div class="menu-button__bar transition"></div>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1"/>
+  <title>Grouter!</title>
+  <link rel="icon" href="static/resources/logo_small.webp"/>
+  <link rel="preconnect" href="static/javascript/map.js"/>
+  <link rel="preconnect" href="https://cdn.jsdelivr.net/gh/openlayers/openlayers.github.io@master/en/v6.15.1"/>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/openlayers/openlayers.github.io@master/en/v6.15.1/css/ol.css"
+        type="text/css">
+  <script src="https://cdn.jsdelivr.net/gh/openlayers/openlayers.github.io@master/en/v6.15.1/build/ol.js"></script>
+  <link rel="preconnect" href="static/javascript/map.js"/>
+  <link rel="stylesheet" href="static/css/index.css"/>
+  <link rel="stylesheet" href="static/css/menu.css"/>
+  <meta charset="UTF-8"/>
+</head>
+<body>
+<div id="map" class="map"></div>
+<div id="menu" class="menu open transition">
+  <div class="menu-button__container">
+    <button onclick="toggleMenu()" class="menu-button">
+      <div class="menu-button__bar transition"></div>
+      <div class="menu-button__bar transition"></div>
+      <div class="menu-button__bar transition"></div>
+    </button>
+  </div>
+  <h1 class="menu-header title-text">
+    <span class="accent-text">G</span>router
+  </h1>
+  {% if not active_routes %}
+      <h2 class="subtitle-text error-text">Šobrīd nav aktīvu maršrutu!</h2>
+  {% endif %}
+  <form onsubmit="return false" class="menu-content transition">
+    {% if active_routes %}
+    <div class="menu-content__body">
+      <div class="menu-content__body-item">
+        <h2 class="subtitle-text">Maršruti</h2>
+        <div id="route" class="menu-content__body-option-list">
+          {% for active_route in active_routes %}
+            <div class="menu-content__body-option-list-item">
+              <input
+                  type="radio"
+                  required
+                  name="route"
+                  id="route-{{ active_route[0] }}"
+                  value="{{ active_route[1] }}"
+                  class="menu-content__body-input"
+              />
+              <label for="route-{{ active_route[0] }}" class="menu-content__body-label">
+                Attālums: {{ active_route[1] }}<br>Laiks: {{ active_route[2] }}
+              </label>
+            </div>
+          {% endfor %}
+          </li>
+        </div>
+      </div>
+      <div class="menu-content__body-item">
+        <button id="select" type="submit" onclick="selectRoute('{{ serverHost }}')"
+                class="submit-button transition">
+          <span>Izvēlēties maršrutu</span>
+          <img src="static/resources/wheel-svgrepo-com.svg" class="spinner">
         </button>
       </div>
-      <form onsubmit="return false" class="menu-content transition">
-        <h1 class="menu-header title-text">
-          <span class="accent-text">G</span>router
-        </h1>
-        <div class="menu-content__body">
-          <div class="menu-content__body-item">
-            <h2 class="subtitle-text">Maršruti</h2>
-            <div id="routes" class="menu-content__body-option-list">
-                <div class="menu-content__body-option-list-item">
-                  <input
-                    type="radio"
-                    required
-                    name="route"
-                    id="route0"
-                    value="0"
-                    class="menu-content__body-input"
-                  />
-                  <label for="route0" class="menu-content__body-label">Maršruts 1</label>
-                </div>
-              </li>
-            </div>
-          </div>
-          <div class="menu-content__body-item">
-            <button id="routeSubmit" type="submit" onclick="sendCourierInfo('{{serverHost}}')" class="submit-button transition">
-              <span>Braukt!</span>
-              <img src="static/resources/wheel-svgrepo-com.svg" class="spinner">
-            </button>
-          </div>
-        </div>
-      </form>
-      <a href="login" class="logout-button">
-        Iziet
-        <img src="static/resources/logout-svgrepo-com.svg" class="logout-icon">
-      </a>
     </div>
-    <script src="static/javascript/map.js"></script>
-    <script src="static/javascript/menu.js"></script>
-    <script>
-        let options = {
-            routes: {{active_routes}}
-        };
-        initOptionsLists(options);
-    </script>
-  </body>
+    {% endif %}
+    {% if selected_order %}
+    <div class="menu-content__body">
+      <div class="menu-content__body-item">
+        <h2 class="subtitle-text">Adreses</h2>
+        <div id="order" class="menu-content__body-option-list">
+          {% for active_route in active_routes %}
+            <div class="menu-content__body-option-list-item">
+              <input
+                  type="radio"
+                  required
+                  name="order"
+                  id="order-{{ active_route[0] }}"
+                  value="{{ active_route[1] }}"
+                  class="menu-content__body-input"
+              />
+              <label for="order-{{ active_route[0] }}" class="menu-content__body-label">{{ active_route[1] }}</label>
+            </div>
+          {% endfor %}
+          </li>
+        </div>
+      </div>
+      <div class="menu-content__body-item">
+        <button id="findOrder" type="submit" onclick="findOrderRoute('{{ serverHost }}', )"
+                class="submit-button transition">
+          <span>Pabeigt piegādes</span>
+          <img src="static/resources/wheel-svgrepo-com.svg" class="spinner">
+        </button>
+      </div>
+    </div>
+    {% endif %}
+  </form>
+  <a href="login" class="logout-button">
+    Iziet
+    <img src="static/resources/logout-svgrepo-com.svg" class="logout-icon">
+  </a>
+</div>
+<script src="static/javascript/map.js"></script>
+<script src="static/javascript/menu.js"></script>
+</body>
 </html>

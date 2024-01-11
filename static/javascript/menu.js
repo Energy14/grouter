@@ -20,6 +20,16 @@ var formSubmits = [
         element: document.getElementById('orderSubmit'),
         restText: 'Pasūtīt',
         loadingText: 'Veido pasūtījumu'
+    },
+    {
+        element: document.getElementById('findOrder'),
+        restText: 'Apskatīt',
+        loadingText: 'Meklē pasūtījumu'
+    },
+    {
+        element: document.getElementById('selectRoute'),
+        restText: 'Izvēlēties maršrutu',
+        loadingText: 'Ielādē maršrutu'
     }
 ];
 
@@ -87,8 +97,6 @@ function collectInfo() {
 
         if (inputListInfo.length > 0) {
             info[inputListId] = inputListInfo;
-        } else {
-            throw new Error('Input list ' + inputListId + ' is empty');
         }
     }
 
@@ -113,8 +121,6 @@ function collectInfo() {
 
         if (optionListInfo.length > 0) {
             info[optionListId] = optionListInfo;
-        } else {
-            throw new Error('Input list ' + optionListId + ' is empty');
         }
     }
 
@@ -159,24 +165,6 @@ function sendAdminInfo(serverHost) {
     sendRequest(xhr, info);
 }
 
-function sendCourierInfo(serverHost) {
-    disableFormSubmits();
-
-    let info = null;
-    try {
-        info = collectInfo();
-    } catch (e) {
-        // Error collecting info, form validation failed
-        enableFormSubmits();
-        return;
-    }
-
-    let xhr = new XMLHttpRequest();
-    xhr.open('POST', 'http://' + serverHost + '/api/courier', true);
-
-    sendRequest(xhr, info);
-}
-
 function sendOrderInfo(serverHost, userId) {
     disableFormSubmits();
 
@@ -193,6 +181,7 @@ function sendOrderInfo(serverHost, userId) {
     let xhr = new XMLHttpRequest();
     xhr.open('POST', 'http://' + serverHost + '/api/user/save-order', true);
 
+    sendRequest(xhr, info);
 }
 
 function findOrderRoute(serverHost) {
@@ -209,6 +198,24 @@ function findOrderRoute(serverHost) {
 
     let xhr = new XMLHttpRequest();
     xhr.open('POST', 'http://' + serverHost + '/api/user/find-order-route', true);
+
+    sendRequest(xhr, info);
+}
+
+function selectRoute(serverHost) {
+    disableFormSubmits();
+
+    let info = null;
+    try {
+        info = collectInfo();
+    } catch (e) {
+        // Error collecting info, form validation failed
+        enableFormSubmits();
+        return;
+    }
+
+    let xhr = new XMLHttpRequest();
+    xhr.open('POST', 'http://' + serverHost + '/api/courier/find-route', true);
 
     sendRequest(xhr, info);
 }

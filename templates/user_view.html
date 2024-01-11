@@ -27,8 +27,8 @@
   <h1 class="menu-header title-text">
     <span class="accent-text">G</span>router
   </h1>
-  {% if active_orders %}
-  <form onsubmit="return false" class="menu-content transition">
+  <form onsubmit="return false" class="menu-content transition">\
+    {% if active_orders %}
     <div class="menu-content__body">
       <div class="menu-content__body-item">
         <h2 class="subtitle-text">Pasūtījumi</h2>
@@ -57,9 +57,7 @@
         </button>
       </div>
     </div>
-  </form>
-  {% endif %}
-  <form onsubmit="return false" class="menu-content transition">
+    {% endif %}
     <div class="menu-content__body">
       <div class="menu-content__body-item">
         <h2 class="subtitle-text">Jauna pasūtījuma adrese</h2>
@@ -70,6 +68,7 @@
                 required
                 name="address"
                 autocomplete="off"
+                value="Rīga, "
                 placeholder="..."
                 oninput="updateInputList(this)"
                 class="menu-content__body-input"
