@@ -61,7 +61,7 @@ Pārredzama sistēma un ātra piegāde palielinās klientu apmierinātību un uz
   
 4. Optimizēt maršrutu:
     * Izmantojot optimizācijas algoritmu, pielāgot maršrutu, lai minimizētu kopējo pārvietošanās attālumu.
-Ņemt vērā piegādes laikus, lai nodrošinātu pasūtījumu piegādi laikā.
+    * Ņemt vērā piegādes laikus, lai nodrošinātu pasūtījumu piegādi laikā.
 
 6. Aktualizēt maršrutu:
    * Aktualizēt maršrutu pēc katra pasūtījuma piegādes vai jauniem pasūtījumiem, kas ienāk sistēmā
