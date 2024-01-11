@@ -18,7 +18,9 @@
 
 .menu.open {
   height: 100vh;
-  width: 400px;
+  width: 100vw;
+  min-width: 300px;
+  max-width: 400px;
   border-radius: 0;
   padding: 20px;
   border-color: var(--primary-color);
