@@ -64,7 +64,7 @@
     <div class="menu-content__body">
       <div class="menu-content__body-item">
         <h2 class="subtitle-text">Jauna pasūtījuma adrese</h2>
-        <ul id="address" class="menu-content__body-input-list" max-size="1">
+        <ul id="address" class="menu-content__body-input-list">
           <li>
             <input
                 type="text"
@@ -72,6 +72,16 @@
                 name="address"
                 autocomplete="off"
                 value="Rīga, "
+                placeholder="..."
+                oninput="updateInputList(this)"
+                class="menu-content__body-input"
+            />
+          </li>
+          <li>
+            <input
+                type="text"
+                name="address"
+                autocomplete="off"
                 placeholder="..."
                 oninput="updateInputList(this)"
                 class="menu-content__body-input"
