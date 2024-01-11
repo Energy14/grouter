@@ -392,8 +392,8 @@ def format_routes(routes):
             'lines': formatted_lines
         }
 
-        distances[courier] = distance
-        durations[courier] = duration
+        distances[courier] += distance
+        durations[courier] += duration
 
     return formatted_routes, distances, durations
 
