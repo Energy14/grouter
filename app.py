@@ -349,8 +349,9 @@ def format_routes(routes):
             response = requests.get(
                 "https://maps.googleapis.com/maps/api/directions/json",
                 params={
-                    "travelMode": "walking",
-                    "units": "metric",
+                    "travelMode": "WALKING",
+                    "mode": "walking",
+                    "units": "METRIC",
                     "origin": f"{route[i][0]},{route[i][1]}",
                     "destination": f"{route[i + 1][0]},{route[i + 1][1]}",
                     "key": "AIzaSyCyVKM3YSZsfnbIUlUDSuPshLM5e8mWzh4"
@@ -370,8 +371,9 @@ def format_routes(routes):
         response = requests.get(
             "https://maps.googleapis.com/maps/api/directions/json",
             params={
-                "travelMode": "walking",
-                "units": "metric",
+                "travelMode": "WALKING",
+                "mode": "walking",
+                "units": "METRIC",
                 "origin": f"{route[-1][0]},{route[-1][1]}",
                 "destination": f"{route[0][0]},{route[0][1]}",
                 "key": "AIzaSyCyVKM3YSZsfnbIUlUDSuPshLM5e8mWzh4"
@@ -392,8 +394,8 @@ def format_routes(routes):
             'lines': formatted_lines
         }
 
-        distances[courier] += distance
-        durations[courier] += duration
+        distances[courier] = distance
+        durations[courier] = duration
 
     return formatted_routes, distances, durations
 
