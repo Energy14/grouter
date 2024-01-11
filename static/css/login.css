@@ -1,0 +1,101 @@
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+
+.box-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--secondary-color);
+    border: 1px solid var(--gray);
+    box-shadow: var(--light-gray) 0px 0px 20px;
+    border-radius: 16px;
+    padding: 40px 60px;
+    min-width: 300px;
+    max-width: 600px;
+    width: 80vw;
+}
+
+.logo {
+    width: 200px;
+    height: 200px;
+    margin-bottom: 1rem;
+}
+
+.login-title{
+    font-size: 3rem;
+    line-height: 3rem;
+    letter-spacing: -1px;
+    font-weight: 700;
+    margin-bottom: 2rem;
+}
+
+.login-container {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    height: 100%;
+    width: 100%;
+}
+
+.login-container > * {
+    flex-basis: 50%;
+    margin-bottom: 10px;
+    font-size: 1.25rem;
+}
+
+input, select {
+    background-color: var(--light-gray);
+    line-height: 20px;
+    padding: 8px 16px;
+    border-right: 16px solid transparent;
+    border-radius: 16px;
+}
+
+option {
+    background-color: var(--secondary-color);
+    color: var(--primary-color);
+}
+
+.login-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--accent-color);
+    color: var(--secondary-color);
+    font-weight: 700;
+    font-size: 1.5rem;
+    line-height: 1.75rem;
+    border: none;
+    border-radius: 100px;
+    padding: 10px 30px;
+    margin-top: 1rem;
+    cursor: pointer;
+}
+
+.login-button.secondary {
+    background-color: var(--secondary-color);
+    color: var(--primary-color);
+    border: 1px solid var(--primary-color);
+}
+
+.login-button:hover {
+    background-color: var(--accent-color-light);
+    transform: scale(1.025);
+}
+
+.login-button.secondary:hover {
+    background-color: var(--secondary-color);
+}
+
+@media screen and (max-width: 600px) {
+    .box-container {
+        padding: 40px 20px;
+        border: none;
+        box-shadow: none;
+    }
+}

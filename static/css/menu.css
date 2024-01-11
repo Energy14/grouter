@@ -61,7 +61,7 @@
 }
 
 .menu-content {
-  max-height: calc(100vh - 40px);
+  max-height: calc(100vh - 80px);
   display: flex;
   flex-direction: column;
   opacity: 0;
@@ -80,6 +80,11 @@
   overflow-x: hidden;
 }
 
+.error-text {
+  margin-top: 1rem;
+    color: var(--accent-color);
+}
+
 .menu-content__body-item {
   border-top: 1px solid var(--light-gray);
   padding: 20px 18px 20px 8px;
@@ -92,38 +97,58 @@
   padding-top: 10px;
 }
 
-.menu-content__body-input-list {
+.menu-content__body-input-list,
+.menu-content__body-option-list{
   list-style: none;
   background-color: var(--light-gray);
   padding: 16px;
   border-radius: 16px 0;
+  gap: 8px;
+  display: flex;
+  flex-direction: column;
 }
 
-.menu-content__body-input-list > li {
+.menu-content__body-input-list > li,
+.menu-content__body-option-list-item{
   width: 100%;
   display: flex;
+  align-items: center;
 }
 
-.menu-content__body-input-list > li > input {
+.menu-content__body-option-list-empty,
+.menu-content__body-input-list > li > input,
+.menu-content__body-option-list-item > label {
   border: 1px solid var(--secondary-color);
+  background-color: var(--secondary-color);
   padding: 4px 8px;
-  margin-bottom: 8px;
   border-radius: 8px;
   flex: 1;
 }
 
-.menu-content__body-input-list > li:last-child > input {
-  margin-bottom: 0;
+.menu-content__body-option-list-item > input {
+  width: 14px;
+  height: 14px;
+  margin-right: 8px;
 }
 
 .menu-content__body-input-list > li:before {
-  content: '-';
-  margin-right: 8px;
-  font-size: 1.15rem;
+  background-color: var(--primary-color);
+  width: 12px;
+  height: 2px;
+  content: '';
+  margin-right: 10px;
 }
 
+.menu-content__body-input-list > li:before,
 .menu-content__body-input {
-  font-size: 1.15rem;
+  font-size: 1.25rem;
+  line-height: 1.25rem;
+}
+
+.menu-content__body-option-list {
+  display: flex;
+  gap: 10px;
+  flex-direction: column;
 }
 
 .submit-button {
@@ -162,6 +187,21 @@
 
 .submit-button:disabled > .spinner {
   display: inline-block;
+}
+
+.logout-button {
+  display: flex;
+  gap: 10px;
+  margin: auto 0 10px 8px;
+  padding-top: 20px;
+  color: var(--primary-color);
+  font-size: 20px;
+  line-height: 20px;
+}
+
+.logout-icon {
+  width: 20px;
+  height: 20px;
 }
 
 @keyframes spin {

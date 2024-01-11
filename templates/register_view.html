@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="lv">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1"/>
+    <title>Grouter!</title>
+    <link rel="icon" href="static/resources/logo_small.webp" />
+    <link rel="stylesheet" href="static/css/index.css" />
+    <link rel="stylesheet" href="static/css/login.css" />
+</head>
+<body>
+    <div class="box-container">
+        <img src="static/resources/logo_large.webp" alt="Grouter logo" class="logo">
+        <h1 class="login-title"><span class="accent-text">G</span>router</h1>
+        <form method="post" class="login-container">
+            <label for="role">Lietotāja veids:</label>
+            <select name="role" id="role" required>
+                <option value="user">Lietotājs</option>
+                <option value="courier">Kurjers</option>
+                <option value="admin">Administrators</option>
+            </select>
+            <label for="username">Lietotājvārds:</label>
+            <input type="text" name="username" id="username" required>
+            <label for="password">Parole:</label>
+            <input type="password" name="password" id="password" required>
+            <label for="password">Apstipriniet paroli:</label>
+            <input type="password" name="confirm" id="confirm" required>
+            {{ message }}
+            <input type="submit" name="register" value="Reģistrēties" class="login-button transition">
+        </form>
+        <form action="" method="post">
+            <input type="submit" name="login" value="Ielogoties" class="login-button secondary transition">
+        </form>
+    </div>
+</body>
+</html>

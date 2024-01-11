@@ -27,7 +27,7 @@ function updateLastInput(list) {
 }
 
 function updateInputList(input) {
-  list = input.parentNode.parentNode;
+  let list = input.parentNode.parentNode;
 
   if (input.value === '' && list.getElementsByTagName('input').length > 1) {
     input.parentNode.remove();
@@ -36,7 +36,7 @@ function updateInputList(input) {
 
   if (lastInputs[list.id] !== input) return;
 
-  maxSize = list.getAttribute('max-size');
+  let maxSize = parseInt(list.getAttribute('max-size'));
   if (maxSize && list.getElementsByTagName('input').length >= maxSize) return;
 
   let newItem = lastInputs[list.id].parentNode.cloneNode(true);
@@ -45,11 +45,6 @@ function updateInputList(input) {
   newInput.value = '';
 
   list.appendChild(newItem);
-  updateLastInput(list);
-}
-
-function removeInput(input) {
-  input.parentNode.removeChild(input);
   updateLastInput(list);
 }
 
@@ -93,7 +88,7 @@ function enableFormSubmit() {
   formSubmit.getElementsByTagName('span')[0].innerHTML = 'Izveidot maršrutus';
 }
 
-function sendInfo(serverHost) {
+function sendAdminInfo(serverHost) {
   disableFormSubmit();
 
   let info = null;
@@ -106,7 +101,47 @@ function sendInfo(serverHost) {
   }
 
   let xhr = new XMLHttpRequest();
-  xhr.open('POST', 'http://' + serverHost + '/api', true);
+  xhr.open('POST', 'http://' + serverHost + '/admin-api', true);
+  xhr.setRequestHeader('Content-Type', 'application/json');
+
+  xhr.onreadystatechange = function () {
+    try {
+      if (xhr.readyState === 4) {
+        if (xhr.status === 200) {
+          let response_json = JSON.parse(xhr.responseText);
+          drawRoutes(response_json);
+        } else {
+          alert(
+            'Error sending info: ' +
+              (xhr.status === 0 ? 'API could not be reached or is not configured!' : '') +
+              (xhr.responseText ? '\nResponse: ' + xhr.responseText : '') +
+              '\nStatus: ' +
+              xhr.status
+          );
+        }
+      }
+    } finally {
+      enableFormSubmit();
+    }
+  };
+
+  xhr.send(JSON.stringify(info));
+}
+
+function sendCourierInfo(serverHost, userForm) {
+  disableFormSubmit();
+
+  let info = null;
+  try {
+    info = collectInfo();
+  } catch (e) {
+    // Error collecting info, form validation failed
+    enableFormSubmit();
+    return;
+  }
+
+  let xhr = new XMLHttpRequest();
+  xhr.open('POST', 'http://' + serverHost + '/courier-api', true);
   xhr.setRequestHeader('Content-Type', 'application/json');
 
   xhr.onreadystatechange = function () {

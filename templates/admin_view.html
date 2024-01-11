@@ -1,5 +1,6 @@
 <!DOCTYPE html>
   <head>
+    <meta charset="UTF-8">
     <title>Grouter!</title>
     <link rel="icon" href="static/resources/logo_small.webp" />
     <link rel="preconnect" href="static/javascript/map.js" />
@@ -21,36 +22,33 @@
           <div class="menu-button__bar transition"></div>
         </button>
       </div>
+      <h1 class="menu-header title-text">
+        <span class="accent-text">G</span>router
+      </h1>
+      {% if not active_order_addresses %}
+      <h2 class="subtitle-text error-text">Šobrīd nav neizsūtītu pasūtījumu!</h2>
+      {% elif not couriers %}
+      <h2 class="subtitle-text error-text">Šobrīd nav pieejamu kurjeru!</h2>
+      {% else %}
       <form onsubmit="return false" class="menu-content transition">
-        <h1 class="menu-header title-text">
-          <span class="accent-text">G</span>router
-        </h1>
+
         <div class="menu-content__body">
           <div class="menu-content__body-item">
             <h2 class="subtitle-text">Adreses</h2>
-            <ul id="addresses" class="menu-content__body-input-list">
-              <li>
+            <div id="addresses" class="menu-content__body-option-list">
+              {% for active_order_address in active_order_addresses %}
+              <div class="menu-content__body-option-list-item">
                 <input
-                  type="text"
+                  type="checkbox"
                   required
-                  name="address"
-                  autocomplete="off"
-                  placeholder="..."
-                  oninput="updateInputList(this)"
+                  name="{{ active_order_address[1] }}"
+                  id="{{ active_order_address[0] }}"
                   class="menu-content__body-input"
                 />
-              </li>
-              <li>
-                <input
-                  type="text"
-                  name="address"
-                  autocomplete="off"
-                  placeholder="..."
-                  oninput="updateInputList(this)"
-                  class="menu-content__body-input"
-                />
-              </li>
-            </ul>
+                <label for="{{ active_order_address[0] }}" class="menu-content__body-label">{{ active_order_address[1] }}</label>
+              </div>
+              {% endfor %}
+            </div>
           </div>
           <div class="menu-content__body-item">
             <h2 class="subtitle-text">Noliktava</h2>
@@ -70,38 +68,34 @@
           </div>
           <div class="menu-content__body-item">
             <h2 class="subtitle-text">Kurjeri</h2>
-            <ul id="couriers" class="menu-content__body-input-list">
-              <li>
+            <div id="couriers" class="menu-content__body-option-list">
+              {% for courier in couriers %}
+              <div class="menu-content__body-option-list-item">
                 <input
-                  type="text"
+                  type="checkbox"
                   required
-                  name="courier"
-                  autocomplete="off"
-                  placeholder="..."
-                  oninput="updateInputList(this)"
+                  name="{{ courier[1] }}"
+                  id="{{ courier[0] }}"
                   class="menu-content__body-input"
                 />
-              </li>
-              <li>
-                <input
-                  type="text"
-                  name="courier"
-                  autocomplete="off"
-                  placeholder="..."
-                  oninput="updateInputList(this)"
-                  class="menu-content__body-input"
-                />
-              </li>
-            </ul>
+                <label for="{{ courier[0] }}" class="menu-content__body-label">{{ courier[1] }}</label>
+              </div>
+              {% endfor %}
+            </div>
           </div>
           <div class="menu-content__body-item">
-            <button id="routeSubmit" type="submit" onclick="sendInfo('{{serverHost}}')" class="submit-button transition">
+            <button id="routeSubmit" type="submit" onclick="sendAdminInfo('{{serverHost}}')" class="submit-button transition">
               <span>Izveidot maršrutus</span>
               <img src="static/resources/wheel-svgrepo-com.svg" class="spinner">
             </button>
           </div>
         </div>
-      </div>
+      </form>
+      {% endif %}
+      <a href="login" class="logout-button">
+        Iziet
+        <img src="static/resources/logout-svgrepo-com.svg" class="logout-icon" alt="logout">
+      </a>
     </div>
     <script src="static/javascript/map.js"></script>
     <script src="static/javascript/menu.js"></script>

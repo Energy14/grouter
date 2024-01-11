@@ -78,7 +78,7 @@ function drawRoute(route_name, route, routeIndex, routeCount) {
   const style = new Style({
     stroke: new Stroke({
       color: spectrumColor,
-      width: 5,
+      width: 4,
     }),
   });
 
