@@ -1,6 +1,23 @@
 # Grouter
 
 Preču piegādes maršrutēšana ar velo kurjeru
+# Problēmas nostādne 
+
+Mūsdienu pilsētu dzīve prasa efektīvas un ātras piegādes pakalpojumus. Lai nodrošinātu maksimālu efektivitāti, mūsu velo kurjeru piegādes sistēmai ir nepieciešama uzlabota maršrutu optimizācija.
+
+# Darba un novērtēšanas mērķis
+
+Nodrošināt ērti lietojamu mājaslapu, kur klienti spēj veikt pasūtījumus, kas tiks piegādāti uz norādīto vietu pēc iespējas īsākā laika periodā, vadītāji spēj pieteikties veikt pasūtījumus ar garantiju, ka tiek sniegta precīza informācija ar optimālāko maršrutu un kopējais pasūtījuma piegādes process ir dabai draudzīgs, neveicinot CO2 un/vai citu piesārņojumu izmešus.
+
+
+1. Ātrākas piegādes:
+Maršrutu optimizācija ļaus veidot īsākus un efektīvus maršrutus, samazinot piegādes laiku.
+
+2. Efektīvāka resursu izmantošana:
+Plānošanas algoritms ļaus optimizēt resursu izmantošanu, samazinot nepieciešamo laiku un izmaksas.
+
+3. Palielināta klientu apmierinātība:
+Pārredzama sistēma un ātra piegāde palielinās klientu apmierinātību un uzturēs lojalitāti.
 
 # Līdzīgo risinājumu pārskats\*
 
@@ -39,3 +56,5 @@ Preču piegādes maršrutēšana ar velo kurjeru
 # Novērtējums
 
 [Novērtēšanas plāns](https://docs.google.com/spreadsheets/d/1xjInoYII43EZXKQeMgyY6zE0TdriM8AhK8rrWZD4gLs/edit?usp=sharing)
+
+# Secinājumi
