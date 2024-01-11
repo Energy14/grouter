@@ -40,6 +40,9 @@
             <div class="menu-content__body-option-list-item">
               <input
                   type="radio"
+                  {% if loop.first %}
+                  checked="checked"
+                  {% endif %}
                   required
                   name="route"
                   id="route-{{ active_route[0] }}"
@@ -72,6 +75,9 @@
             <div class="menu-content__body-option-list-item">
               <input
                   type="radio"
+                  {% if loop.first %}
+                  checked="checked"
+                  {% endif %}
                   required
                   name="order"
                   id="order-{{ active_route[0] }}"

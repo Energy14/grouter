@@ -27,7 +27,7 @@
   <h1 class="menu-header title-text">
     <span class="accent-text">G</span>router
   </h1>
-  <form onsubmit="return false" class="menu-content transition">\
+  <form onsubmit="return false" class="menu-content transition">
     {% if active_orders %}
     <div class="menu-content__body">
       <div class="menu-content__body-item">
@@ -37,6 +37,9 @@
             <div class="menu-content__body-option-list-item">
               <input
                   type="radio"
+                  {% if loop.first %}
+                  checked="checked"
+                  {% endif %}
                   required
                   name="order"
                   id="order-{{ active_order[0] }}"
