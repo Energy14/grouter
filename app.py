@@ -366,7 +366,7 @@ def format_routes(routes):
 
             for leg in response.json()['routes'][0]['legs']:
                 distance += leg['distance']['value']
-                duration += leg['duration']['value']
+                duration += leg['duration']['value'] / 6
 
         response = requests.get(
             "https://maps.googleapis.com/maps/api/directions/json",
@@ -387,7 +387,7 @@ def format_routes(routes):
 
         for leg in response.json()['routes'][0]['legs']:
             distance += leg['distance']['value']
-            duration += leg['duration']['value']
+            duration += leg['duration']['value'] / 6
 
         formatted_routes[courier] = {
             'markers': formatted_markers,
