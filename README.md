@@ -53,13 +53,13 @@ Pārredzama sistēma un ātra piegāde palielinās klientu apmierinātību un uz
 
 # Algoritms
 
-1. Iegūt pasūtījumu un klientu informāciju.
+1. Iegūt pasūtījumu un klientu informāciju:
    * Iegūt informāciju par visiem esošajiem pasūtījumiem un to adresēm.
 3. Izveidot sākotnējo maršrutu:
    * Izveidot sākotnējo maršrutu, ņemot vērā visus pasūtījumus un to atrašanās vietas.
    * Minimizēt kopējo attālumu, ņemot vērā esošos pasūtījumus un to prioritātes.
   
-4. Optimizēt maršrutu
+4. Optimizēt maršrutu:
     * Izmantojot optimizācijas algoritmu, pielāgot maršrutu, lai minimizētu kopējo pārvietošanās attālumu.
 Ņemt vērā piegādes laikus, lai nodrošinātu pasūtījumu piegādi laikā.
 
