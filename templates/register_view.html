@@ -22,9 +22,13 @@
             <label for="username">Lietotājvārds:</label>
             <input type="text" name="username" id="username" required>
             <label for="password">Parole:</label>
-            <input type="password" name="password" id="password" required>
+            <input type="password" name="password" id="password" required
+              pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{9,}"
+              title="Parolei jāsastāv no cipariem, lieliem un maziem burtiem un jābūt vismaz 9 simbolus garai!">
             <label for="password">Apstipriniet paroli:</label>
-            <input type="password" name="confirm" id="confirm" required>
+            <input type="password" name="confirm" id="confirm" required
+              pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{9,}"
+              title="Parolei jāsastāv no cipariem, lieliem un maziem burtiem un jābūt vismaz 9 simbolus garai!">
             {{ message }}
             <input type="submit" name="register" value="Reģistrēties" class="login-button transition">
         </form>

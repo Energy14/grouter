@@ -43,7 +43,7 @@ def register():
             return render_template('register_view.html', message='Please fill in all fields')
 
         if request.form['password'] != request.form['confirm']:
-            return render_template('register_view.html', message='Passwords do not match')
+            return render_template('register_view.html', message='Parolēm jāsakrīt!')
 
         pass_hash = bcrypt.generate_password_hash(request.form['password']).decode('utf-8')
 
@@ -52,7 +52,7 @@ def register():
         try:
             db.add_user(username, pass_hash, request.form['role'])
         except:
-            return render_template('register_view.html', message=f'Username {username} already in use')
+            return render_template('register_view.html', message=f'Lietotājvārds {username} jau tiek izmantots')
 
         return redirect_by_role()
 
