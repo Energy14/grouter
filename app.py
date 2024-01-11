@@ -424,7 +424,13 @@ def check_auth(username=None, password=None):
             return None
         password = request.form['password']
 
-    user = db.get_user(username)
+    try:
+        user = db.get_user(username)
+    except:
+        return None
+
+    if user is None:
+        return None
 
     if not bcrypt.check_password_hash(user['pass_hash'], password):
         return None
