@@ -9,14 +9,13 @@ Mūsdienu pilsētu dzīve prasa efektīvas un ātras piegādes pakalpojumus. Lai
 
 Nodrošināt ērti lietojamu mājaslapu, kur klienti spēj veikt pasūtījumus, kas tiks piegādāti uz norādīto vietu pēc iespējas īsākā laika periodā, vadītāji spēj pieteikties veikt pasūtījumus ar garantiju, ka tiek sniegta precīza informācija ar optimālāko maršrutu un kopējais pasūtījuma piegādes process ir dabai draudzīgs, neveicinot CO2 un/vai citu piesārņojumu izmešus.
 
-
-1. Ātrākas piegādes:
+-  Ātrākas piegādes:
 Maršrutu optimizācija ļaus veidot īsākus un efektīvus maršrutus, samazinot piegādes laiku.
 
-2. Efektīvāka resursu izmantošana:
+-  Efektīvāka resursu izmantošana:
 Plānošanas algoritms ļaus optimizēt resursu izmantošanu, samazinot nepieciešamo laiku un izmaksas.
 
-3. Palielināta klientu apmierinātība:
+-  Palielināta klientu apmierinātība:
 Pārredzama sistēma un ātra piegāde palielinās klientu apmierinātību un uzturēs lojalitāti.
 
 # Līdzīgo risinājumu pārskats\*
@@ -44,6 +43,28 @@ Pārredzama sistēma un ātra piegāde palielinās klientu apmierinātību un uz
 |    3    | Vadītājs vēlas optimālu maršrutu, jo viņam jānogādā pasūtījumi pēc iespējas ātrāk                   |   Augsta   |
 |    4    | Klients vēlas saņemt informāciju par pasūtījuma piegādes statusu, jo viņš grib zināt, kad to gaidīt |   Vidēja   |
 |    5    | Klients vēlas, lai pasūtījums tiek piegādāts ar dabai draudzīgu transportu, jo klientam rūp vide    |   Vidēja   |
+
+# Prasības
+-  Sistēmai jāspēj reģistrēt pasūtījumu un to izgūt atrašanās vietu un klienta datus.
+-  Vadītājam jāspēj iegūt detalizēta informācija par maršrutu, izmantojot karti mājaslapā.
+-  Sistēmai jāspēj automātiski optimizēt maršrutus, ņemot vērā vairākus pasūtījumus un to prioritātes.
+-  Optimizācijas algoritms jāveido, ņemot vērā piegādes laikus un attālumus.
+-  Klientam jābūt iespējai sekot līdzi pasūtījuma piegādes statusam.
+
+# Algoritms
+
+1. Iegūt pasūtījumu un klientu informāciju.
+   * Iegūt informāciju par visiem esošajiem pasūtījumiem un to adresēm.
+3. Izveidot sākotnējo maršrutu:
+   * Izveidot sākotnējo maršrutu, ņemot vērā visus pasūtījumus un to atrašanās vietas.
+   * Minimizēt kopējo attālumu, ņemot vērā esošos pasūtījumus un to prioritātes.
+  
+4. Optimizēt maršrutu
+    * Izmantojot optimizācijas algoritmu, pielāgot maršrutu, lai minimizētu kopējo pārvietošanās attālumu.
+Ņemt vērā piegādes laikus, lai nodrošinātu pasūtījumu piegādi laikā.
+
+6. Aktualizēt maršrutu:
+   * Aktualizēt maršrutu pēc katra pasūtījuma piegādes vai jauniem pasūtījumiem, kas ienāk sistēmā
 
 # Konceptu Modelis
 
