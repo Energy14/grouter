@@ -15,7 +15,7 @@ body {
     box-shadow: var(--light-gray) 0px 0px 20px;
     border-radius: 16px;
     padding: 40px 60px;
-    min-width: 300px;
+    min-width: 200px;
     max-width: 600px;
     width: 80vw;
 }
@@ -43,7 +43,7 @@ body {
 }
 
 .login-container > * {
-    flex-basis: 50%;
+    width: 100%;
     margin-bottom: 10px;
     font-size: 1.25rem;
 }
@@ -94,8 +94,24 @@ option {
 
 @media screen and (max-width: 600px) {
     .box-container {
-        padding: 40px 20px;
+        padding: 10px 20px;
         border: none;
         box-shadow: none;
+    }
+}
+
+@media screen and (max-height: 650px) {
+    .login-title {
+        margin-bottom: 1rem;
+    }
+
+    .login-container > * {
+        margin-bottom: 5px;
+    }
+
+    .logo {
+        width: 150px;
+        height: 150px;
+        margin-bottom: 0.5rem;
     }
 }
