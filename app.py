@@ -357,8 +357,6 @@ def format_routes(routes):
                 }
             )
 
-            print({route[i][0]},{route[i][1]})
-            print({route[i + 1][0]},{route[i + 1][1]})
             for step in response.json()['routes'][0]['legs'][0]['steps']:
                 start = step['start_location']
                 end = step['end_location']
