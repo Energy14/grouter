@@ -61,7 +61,7 @@
 }
 
 .menu-content {
-  max-height: calc(100vh - 80px);
+  max-height: calc(100vh - 160px);
   display: flex;
   flex-direction: column;
   opacity: 0;
@@ -137,12 +137,6 @@
   height: 2px;
   content: '';
   margin-right: 10px;
-}
-
-.menu-content__body-input-list > li:before,
-.menu-content__body-input {
-  font-size: 1.25rem;
-  line-height: 1.25rem;
 }
 
 .menu-content__body-option-list {

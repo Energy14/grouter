@@ -24,11 +24,11 @@
       <div class="menu-button__bar transition"></div>
     </button>
   </div>
-  <form method="post" class="menu-content transition">
-    <h1 class="menu-header title-text">
-      <span class="accent-text">G</span>router
-    </h1>
-    {% if active_orders %}
+  <h1 class="menu-header title-text">
+    <span class="accent-text">G</span>router
+  </h1>
+  {% if active_orders %}
+  <form onsubmit="return false" class="menu-content transition">
     <div class="menu-content__body">
       <div class="menu-content__body-item">
         <h2 class="subtitle-text">Pasūtījumi</h2>
@@ -38,25 +38,28 @@
               <input
                   type="radio"
                   required
-                  name="{{ active_order[1] }}"
-                  id="{{ active_order[0] }}"
+                  name="order"
+                  id="order-{{ active_order[0] }}"
+                  value="{{ active_order[1] }}"
                   class="menu-content__body-input"
               />
-              <label for="{{ active_order[0] }}" class="menu-content__body-label">{{ active_order[1] }}</label>
+              <label for="order-{{ active_order[0] }}" class="menu-content__body-label">{{ active_order[1] }}</label>
             </div>
           {% endfor %}
           </li>
         </div>
       </div>
       <div class="menu-content__body-item">
-        <button id="findOrder" type="submit">
+        <button id="findOrder" type="submit" onclick="findOrderRoute('{{ serverHost }}')"
                 class="submit-button transition">
           <span>Apskatīt</span>
           <img src="static/resources/wheel-svgrepo-com.svg" class="spinner">
         </button>
       </div>
     </div>
-    {% endif %}
+  </form>
+  {% endif %}
+  <form onsubmit="return false" class="menu-content transition">
     <div class="menu-content__body">
       <div class="menu-content__body-item">
         <h2 class="subtitle-text">Jauna pasūtījuma adrese</h2>
@@ -75,7 +78,7 @@
         </ul>
       </div>
       <div class="menu-content__body-item">
-        <button id="orderSubmit" type="submit">
+        <button id="orderSubmit" type="submit" onclick="sendOrderInfo('{{ serverHost }}', {{ user_id }})"
                 class="submit-button transition">
           <span>Pasūtīt</span>
           <img src="static/resources/wheel-svgrepo-com.svg" class="spinner">

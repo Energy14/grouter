@@ -87,9 +87,9 @@ def admin_view():
         formatted_couriers.append((str(courier['id']), courier['username']))
 
     return render_template('admin_view.html',
-                            serverHost=request.environ['HTTP_HOST'],
-                            active_order_addresses=formatted_order_addresses,
-                            couriers=formatted_couriers)
+                           serverHost=request.environ['HTTP_HOST'],
+                           active_order_addresses=formatted_order_addresses,
+                           couriers=formatted_couriers)
 
 
 @app.route('/courier', methods=['GET', 'POST'])
@@ -104,8 +104,8 @@ def courier_view():
     active_routes = db.get_active_routes(user['id'])
 
     return render_template('courier_view.html',
-                            serverHost=request.environ['HTTP_HOST'],
-                            active_routes=active_routes,)
+                           serverHost=request.environ['HTTP_HOST'],
+                           active_routes=active_routes, )
 
 
 @app.route('/user', methods=['GET', 'POST'])
@@ -117,31 +117,15 @@ def user_view():
     if user is None or user['role'] != 'user':
         return redirect("/login", code=303)
 
-    if request.method == 'POST':
-        if 'address' not in request.form:
-            return redirect("/user", code=303)
-
-        address_name = request.form['address']
-
-        try:
-            address = get_coordinates(address_name)
-        except Exception as e:
-            return e.args[0], 500
-
-        try:
-            address_id = db.add_address(address_name, address[0], address[1])
-            db.add_order(user['id'], address_id)
-        except Exception as e:
-            return e.args[0], 500
-
     active_orders = db.get_active_orders(user['id'])
     formatted_order_addresses = []
     for order in active_orders:
         formatted_order_addresses.append((str(order['id']), order['address']))
 
     return render_template('user_view.html',
-                            serverHost=request.environ['HTTP_HOST'],
-                            active_orders=active_orders)
+                           serverHost=request.environ['HTTP_HOST'],
+                           active_orders=formatted_order_addresses,
+                           user_id=user['id'], )
 
 
 @app.route('/api', methods=['GET'])
@@ -152,7 +136,7 @@ def get_data():
     return redirect("https://youtu.be/dQw4w9WgXcQ?si=s5egZJ1Kr7_xkytG", code=302)
 
 
-@app.route('/admin-api', methods=['POST'])
+@app.route('/api/admin', methods=['POST'])
 def post_data():
     # Logic to handle POST requests goes here
     data = request.get_json()
@@ -160,6 +144,11 @@ def post_data():
     address_list = data.get('addresses', [])
     warehouse = data.get('warehouse', None)[0]
     courier_list = data.get('couriers', [])
+
+    # Discard courier ids
+    courier_name_list = []
+    for courier in courier_list:
+        courier_name_list.append(courier[0])
 
     # Translate addresses to coordinates
     coordinates = []
@@ -188,13 +177,13 @@ def post_data():
     #        distances.append([i,distance])
 
     # Use KMeans to make clusters
-    kmeans = KMeans(n_clusters=len(courier_list), n_init=10)
+    kmeans = KMeans(n_clusters=len(courier_name_list), n_init=10)
     kmeans.fit(coordinates)
 
     # Create a dictionary where the keys are the courier names and the values are the coordinates of points assigned to that courier
     courier_dict = {}
     for i in range(len(kmeans.labels_)):
-        courier = courier_list[kmeans.labels_[i]]
+        courier = courier_name_list[kmeans.labels_[i]]
         if courier not in courier_dict:
             courier_dict[courier] = [coordinates[i]]
             courier_dict[courier].append(warehouseLocation)
@@ -230,6 +219,50 @@ def post_data():
     formatted_routes = format_routes(routes)
 
     return jsonify(formatted_routes)
+
+
+@app.route('/api/user/save-order', methods=['POST'])
+def save_order():
+    data = request.get_json()
+
+    address_names = data.get('address', None)
+    user_id = data.get('user_id', None)
+
+    if user_id is None:
+        return f'Missing required field {user_id}', 500
+    if address_names is None:
+        return f'Missing required field {address_names}', 500
+
+    for address_name in address_names:
+        try:
+            address = get_coordinates(address_name)
+        except Exception as e:
+            return e.args[0], 500
+
+        try:
+            address_id = db.add_address(address_name, address[0], address[1])
+            db.add_order(user_id, address_id)
+        except Exception as e:
+            return e.args[0], 500
+
+    return jsonify({'message': 'success'}), 200
+
+
+@app.route('/api/user/find-order-route', methods=['POST'])
+def find_order_route():
+    data = request.get_json()
+
+    order_id = data.get('order_ids', None)[0]
+
+    if order_id is None:
+        return f'Missing required field {order_id}', 500
+
+    try:
+        route_id = db.get_order_route(order_id)
+    except Exception as e:
+        return e.args[0], 500
+
+
 
 
 def get_coordinates(address):

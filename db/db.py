@@ -27,7 +27,9 @@ def get_addresses():
 def add_address(name, lat, lon):
     cursor = make_connection()
 
-    cursor.execute(f"INSERT INTO addresses (name, lat, lon) VALUES ('{name}', '{lat}', {lon}) RETURNING id")
+    cursor.execute(f"INSERT INTO addresses (name, lat, lon) VALUES ('{name}', '{lat}', {lon}) "
+                   f"ON CONFLICT (name) DO UPDATE SET lat = '{lat}', lon = {lon} "
+                   f"RETURNING id")
     address_id = cursor.fetchone()[0]
     cursor.connection.commit()
 
@@ -120,13 +122,34 @@ def get_active_routes(courier_id):
     return routes
 
 
+def get_order_route(order_id):
+    cursor = make_connection()
+
+    cursor.execute(f"SELECT route_id FROM orders "
+                   f"JOIN routes ON orders.route_id = routes.id "
+                   f"WHERE orders.id = {order_id}")
+    result = cursor.fetchall()
+    route_id = result[0][0]
+
+    cursor.close()
+
+    return route_id
+
+
 def save_route(courier_id, coords, order_dict, ride_time='1 hour'):
     cursor = make_connection()
 
     cursor.execute(f"INSERT INTO routes (courier_id, ride_time) VALUES ({courier_id}, '{ride_time}') RETURNING id")
     route_id = cursor.fetchone()[0]
+    cursor.connection.commit()
+
     for coord in coords:
-        cursor.execute(f"UPDATE orders SET route_id = {route_id} WHERE id = {order_dict[coord]}")
+        order_id = order_dict.get(coord, None)
+        if order_id is not None:
+            try:
+                cursor.execute(f"UPDATE orders SET route_id = {route_id} WHERE id = {order_id}")
+            except Exception as e:
+                print(e)
     cursor.connection.commit()
 
     cursor.close()
@@ -151,21 +174,23 @@ def save_routes(routes, order_dict):
 def get_active_orders(user_id=None):
     cursor = make_connection()
 
-    order_sql = (f"SELECT orders.id, address_id, route_id FROM orders "
-                 f"JOIN routes ON orders.route_id = routes.id "
-                 f"WHERE complete = false ")
+    order_sql = (f"SELECT orders.id, address_id, route_id, addresses.name FROM orders "
+                 f"LEFT JOIN routes ON orders.route_id = routes.id "
+                 f"JOIN addresses ON orders.address_id = addresses.id "
+                 f"WHERE route_id IS NULL ")
 
     if user_id is not None:
-        order_sql += f"AND user_id = {user_id}"
+        order_sql += f"OR (user_id = {user_id} AND complete = false)"
 
     cursor.execute(order_sql)
     result = cursor.fetchall()
     orders = []
     for row in result:
         orders.append({
-            'order_id': row[0],
+            'id': row[0],
             'address_id': row[1],
-            'route_id': row[2]
+            'route_id': row[2],
+            'address': row[3]
         })
 
     cursor.close()

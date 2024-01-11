@@ -42,10 +42,10 @@
                   type="checkbox"
                   required
                   name="{{ active_order_address[1] }}"
-                  id="{{ active_order_address[0] }}"
+                  id="address-{{ active_order_address[0] }}"
                   class="menu-content__body-input"
                 />
-                <label for="{{ active_order_address[0] }}" class="menu-content__body-label">{{ active_order_address[1] }}</label>
+                <label for="address-{{ active_order_address[0] }}" class="menu-content__body-label">{{ active_order_address[1] }}</label>
               </div>
               {% endfor %}
             </div>
@@ -75,10 +75,10 @@
                   type="checkbox"
                   required
                   name="{{ courier[1] }}"
-                  id="{{ courier[0] }}"
+                  id="courier-{{ courier[0] }}"
                   class="menu-content__body-input"
                 />
-                <label for="{{ courier[0] }}" class="menu-content__body-label">{{ courier[1] }}</label>
+                <label for="courier-{{ courier[0] }}" class="menu-content__body-label">{{ courier[1] }}</label>
               </div>
               {% endfor %}
             </div>
