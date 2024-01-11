@@ -35,3 +35,7 @@ Preču piegādes maršrutēšana ar velo kurjeru
 # Tehnoloģiju Steks
 
 ![Tehnoloģiju Steks](static/media/TechStack.PNG)
+
+# Novērtējums
+
+[Novērtēšanas plāns](https://docs.google.com/spreadsheets/d/1xjInoYII43EZXKQeMgyY6zE0TdriM8AhK8rrWZD4gLs/edit?usp=sharing)
