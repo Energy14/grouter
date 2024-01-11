@@ -79,3 +79,45 @@ Pārredzama sistēma un ātra piegāde palielinās klientu apmierinātību un uz
 [Novērtēšanas plāns](https://docs.google.com/spreadsheets/d/1xjInoYII43EZXKQeMgyY6zE0TdriM8AhK8rrWZD4gLs/edit?usp=sharing)
 
 # Secinājumi
+
+"Grouter" ir izveidots ar mērķi uzlabot preču piegādes maršrutēšanas efektivitāti, un tas ir veiksmīgi nodrošinājis ērtu pieredzi visām iesaistītajām pusēm, uzlabojot piegādes laiku un resursu izmantošanu. Algoritmu izmantošana, lai veidotu optimālus maršrutus, ir bijusi veiksmīga, un lietotāju prioritātes ir ņemtas vērā, palielinot kopējo klientu apmierinātību.
+
+Mājaslapā pieejamas trīs galvenās lietotāju kategorijas.
+
+-  Klients (Lietotājs):
+      - Pasūtījuma veikšana: Klientiem ir iespēja viegli veikt pasūtījumu, ievadot nepieciešamo informāciju un norādot piegādes adresi.
+      - Piegādes statuss: Klientiem ir nodrošināta iespēja sekot līdzi savu pasūtījumu piegādes statusam, sniedzot viņiem pārredzamu informāciju par to, kad gaidīt pasūtījumu.
+
+-  Kurjers:
+      - Maršrutu izvēle: Kurjeriem ir pieejama mājaslapas funkcionalitāte, kas ļauj izvēlēties optimālu maršrutu no tiem, kas ir izveidoti, ņemot vērā vairākus pasūtījumus un to prioritātes.
+      - Detalizēta informācija par maršrutu: Kurjeri var piekļūt detalizētai informācijai par savu maršrutu, izmantojot mājaslapas kartes funkciju.
+
+-  Administrators:
+     - Pasūtījumu vadība: Administratori var viegli pārvaldīt pasūtījumus, izvēloties adreses un piešķirot kurjerus, nodrošinot efektīvu resursu izmantošanu.
+     - Kurjeru piesaiste: Administratori var piesaistīt kurjerus konkrētiem pasūtījumiem, ņemot vērā piegādes laikus un klientu prioritātes.
+     - Algoritma izmantošana: Mājaslapa izmanto izstrādātu algoritmu, lai automātiski optimizētu maršrutus, samazinot kopējo attālumu un nodrošinot ātrāku piegādi.
+
+
+### Optimālākā maršruta aprēķināšanai un izveidei tika izmantoti K-vidējā un Traveling Salesman algoritms. 
+
+K-means un Traveling Salesman Algoritms:
+
+*  Maršrutu Klasterizācija (K-means): Izmantojot K-means algoritmu, tiek izveidoti maršrutu klasteri, kas ļauj grupēt pasūtījumus, kas ir tuvu viens otram, optimizējot resursu izmantošanu.
+
+*  Traveling Salesman Algoritms: Pēc klasteru izveides tiek pielietots Traveling Salesman Algoritms, lai noteiktu optimālo maršrutu katram klasteram, minimizējot kopējo attālumu.
+
+
+### Izstrādes laikā tika sasniegti galvenie mērķi:
+
+- Ātrākas piegādes: Maršrutu optimizācija ir veiksmīgi samazinājusi piegādes laiku, nodrošinot klientiem ātru un efektīvu pakalpojumu.
+
+- Efektīvāka resursu izmantošana: Izveidotais algoritms efektīvi izmanto resursus, samazinot nepieciešamo laiku un izmaksas.
+
+- Palielināta klientu apmierinātība: Pārredzama sistēma un ātra piegāde ir palielinājusi klientu apmierinātību un uzturējusi lojalitāti.
+
+- Sistēmas stabilitāte: Mājaslapa darbojas stabili, nodrošinot nepārtrauktu pakalpojumu sniegšanu.
+
+
+
+Secinot, "Grouter" ir veiksmīgi izveidots un piedāvā efektīvu risinājumu velo kurjeru piegādes maršrutēšanai, nodrošinot ātru, pārredzamu un videi draudzīgu pakalpojumu.
+
